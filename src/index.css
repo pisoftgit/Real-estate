@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("../Fonts/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf") format("truetype");
+}
+
+
+@font-face {
+  font-family: "NunitoSans-Italic";
+  src: url("../Fonts/NunitoSans-Italic-VariableFont_YTLC\,opsz\,wdth\,wght.ttf") format("truetype");
+}
+
+
+@theme {
+  --font-ns: "Nunito Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-It: "NunitoSans-Italic";
+
+}
