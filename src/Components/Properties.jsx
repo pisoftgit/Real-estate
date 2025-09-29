@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const sampleProperties = [
   {
@@ -59,6 +60,12 @@ export default function Properties() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const navigate = useNavigate();
+
+
+  const HandleSearch = ()=>{
+    navigate('/search')
+  }
 
   const onMouseDown = (e) => {
     setIsDragging(true);
@@ -73,7 +80,7 @@ export default function Properties() {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // scroll speed multiplier
+    const walk = (x - startX) * 2;
     scrollRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -83,7 +90,6 @@ export default function Properties() {
         Featured Properties
       </h2>
 
-      {/* Large screen: horizontal scroll with hover overlay and drag-to-scroll */}
       <div className="hidden lg:block relative">
         <div
           ref={scrollRef}
@@ -107,7 +113,7 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-45 object-cover rounded-xl"
                 />
-                <button className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#1fa141] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-[#15832c] transition-colors whitespace-nowrap">
+                <button onClick={HandleSearch} className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#1fa141] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-[#15832c] transition-colors whitespace-nowrap">
                   Show Details
                 </button>
               </div>
@@ -157,7 +163,7 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-38 object-cover"
                 />
-                <button className="absolute bottom-2 right-2 bg-white text-sm text-[#1fa141] font-bold px-3 py-1 rounded shadow hover:bg-[#1fa141] hover:text-white transition-all">
+                <button onClick={HandleSearch} className="absolute bottom-2 right-2 bg-white text-sm text-[#1fa141] font-bold px-3 py-1 rounded shadow hover:bg-[#1fa141] hover:text-white transition-all">
                   Show Details
                 </button>
               </div>

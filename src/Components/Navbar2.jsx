@@ -80,9 +80,8 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                             <h2 className="text-xl font-It font-bold" style={{ color: primaryColor }}>
                                 <a href='/'>HOMELAND</a>
                             </h2>
-
-                            <button onClick={onClose} className="text-2xl text-gray-800 p-2">
-                                <FaTimes />
+                            <button onClick={onClose} className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 flex-shrink-0">
+                                <FaTimes className="text-base text-gray-600" />
                             </button>
                         </div>
 
@@ -191,7 +190,7 @@ export default function Navbar() {
                             <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>HomeLand</a></div>
 
                         </div>
-                        <div
+                        {/* <div
                             className="relative cursor-pointer items-center space-x-1 hidden md:flex"
                             onMouseEnter={() => setHoveredDropdown('Location')}
                             onMouseLeave={() => setHoveredDropdown(null)}
@@ -223,7 +222,7 @@ export default function Navbar() {
                                     </motion.div>
                                 )}
                             </AnimatePresence>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="flex items-center space-x-4 md:space-x-6 text-white font-medium">
@@ -250,7 +249,7 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className="bg-white shadow text-gray-800 py-3 hidden md:block">
+            {/* <div className="bg-white shadow text-gray-800 py-3 hidden md:block">
                 <div className="max-w-7xl mx-auto px-4 md:px-8">
                     <div className="flex justify-center items-center space-x-1 font-semibold">
                         {dropdownItems.map((item) => {
@@ -272,7 +271,6 @@ export default function Navbar() {
                                         <FaChevronDown className={`text-[10px] ${isActive ? 'text-white' : 'text-gray-400'}`} />
                                     </div>
 
-                                    {/* Dropdown */}
                                     <AnimatePresence>
                                         {isActive && (
                                             <motion.div
@@ -303,7 +301,7 @@ export default function Navbar() {
                         })}
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             <MobileMenu
                 isOpen={isMobileMenuOpen}

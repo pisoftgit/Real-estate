@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Loader from './Components/Loader';
-import Navbar from './Components/Navbar';
 
 
 // Pages
 import Home from './Pages/Home';
+import SearchPage from './Pages/Search';
+import Details from './Pages/Details';
 
 
 
@@ -29,6 +30,8 @@ function AppWrapper() {
       {!loading && (
         <Routes>
           <Route index element={<Home />} />
+          <Route path='/search' element={<SearchPage />} />
+          {/* <Route path='/Details' element={<Details />} /> */}
         </Routes>
       )}
     </>

@@ -18,6 +18,7 @@ import {
 import Properties from '../Components/Properties'
 import Explore from '../Components/Explore'
 import Footer from '../Components/Footer'
+import { useNavigate } from 'react-router-dom'
 
 
 const citiesList = ['Mumbai', 'Delhi', 'Chennai', 'Pune', 'Hyderabad']
@@ -44,7 +45,7 @@ const dropdownVariants = {
 const FilterDropdown = ({ label, icon: Icon, options }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState(options[0])
-
+  
     return (
         <div
             className="relative w-full md:w-auto"
@@ -90,6 +91,11 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
 export default function Home() {
     const prevRef = useRef(null)
     const nextRef = useRef(null)
+    const navigate= useNavigate()
+
+    const HandleSearch = () =>{
+        navigate("/search")
+    }
 
     return (
         <>
@@ -119,7 +125,6 @@ export default function Home() {
                     </div>
 
 
-                    {/* Search Bar */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -135,17 +140,17 @@ export default function Home() {
 
                         <motion.button
                             whileTap={{ scale: 0.95 }}
+                            onClick={HandleSearch}
                             whileHover={{ scale: 1.03 }}
                             className="bg-[#1fa141] text-white font-bold rounded-full px-6 py-2 flex items-center justify-center hover:bg-green-700 transition w-full md:w-auto col-span-full"
                         >
-                            <FaSearch className="mr-2" />
+                            <FaSearch className="mr-2" onClick={HandleSearch} />
                             Search
                         </motion.button>
                     </motion.div>
 
                 </div>
 
-                {/* Background Swiper */}
                 <Swiper
                     modules={[Autoplay, Navigation]}
                     navigation={{

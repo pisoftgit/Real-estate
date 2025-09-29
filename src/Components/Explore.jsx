@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 // import { FaImage } from 'react-icons/fa';
-import { FaArrowRight } from 'react-icons/fa'
 
 const PRIMARY_COLOR = '#1fa141'
 const propertyCategories = [
@@ -104,6 +104,12 @@ const propertyCards = [
 ]
 
 export default function PopularProperties() {
+
+    const navigate = useNavigate();
+    const HandleSearch = () =>{
+        navigate("/Search")
+    }
+    
     return (
         <>
             <section className='max-w-7xl mx-auto px-4 md:px-8 py-8'>
@@ -112,7 +118,6 @@ export default function PopularProperties() {
                     <span className='absolute left-0 -bottom-1 w-12 h-1 bg-green-700 rounded-full' />
                 </h2>
 
-                {/* Desktop layout: 4 equal cards */}
                 <div className="hidden lg:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {propertyCategories.map((item, idx) => (
                         <div
@@ -240,7 +245,7 @@ export default function PopularProperties() {
                                     <p className='text-xs text-gray-700'>{property.status}</p>
                                 </div>
                                 <div className='px-3 pb-3'>
-                                    <button className='bg-green-700 hover:bg-green-700 text-white text-sm font-ns font-semibold px-4 py-1 rounded-xl'>
+                                    <button onClick={HandleSearch} className='bg-green-700 hover:bg-green-700 text-white text-sm font-ns font-semibold px-4 py-1 rounded-xl'>
                                         View Details
                                     </button>
                                 </div>
@@ -289,6 +294,7 @@ export default function PopularProperties() {
                                 <button
                                     className='bg-white text-sm font-ns font-semibold text-black px-4 py-1 rounded'
                                     style={{ color: PRIMARY_COLOR }}
+                                    onClick={HandleSearch}
                                 >
                                     View Details
                                 </button>
