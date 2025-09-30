@@ -113,7 +113,7 @@ export default function Home() {
                             transition={{ duration: 0.6, ease: 'easeOut' }}
                             className="text-white text-2xl md:text-4xl xl:text-5xl font-extrabold leading-tight font-ns drop-shadow-lg"
                         >
-                            Find Your Dream Home with <span className="text-[#cae1ff] font-It">HomeLand</span>
+                            Find Your Dream Home with <span className="text-[#cae1ff] font-It">RealEstate</span>
                         </motion.h1>
 
                         <motion.h2

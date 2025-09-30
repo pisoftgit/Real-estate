@@ -80,7 +80,7 @@ export default function Footer() {
     <footer className="bg-gray-100 text-gray-700 text-sm select-none mt-5">
       <div className="container mx-auto px-4 md:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div>
-          <SectionTitle>About HomeLand</SectionTitle>
+          <SectionTitle>About RealEstate</SectionTitle>
           <p className="mb-4 leading-relaxed text-gray-600">
             As the largest platform connecting property buyers and sellers, …{" "}
             <AnimatedLink href="#">Read more</AnimatedLink>

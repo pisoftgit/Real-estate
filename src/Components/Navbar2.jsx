@@ -78,7 +78,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                         {/* Header */}
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-It font-bold" style={{ color: primaryColor }}>
-                                <a href='/'>HOMELAND</a>
+                                <a href='/'>RealEstate</a>
                             </h2>
                             <button onClick={onClose} className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 flex-shrink-0">
                                 <FaTimes className="text-base text-gray-600" />
@@ -186,7 +186,7 @@ export default function Navbar() {
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4 md:space-x-10">
                         <div className='flex flex-row justify-between items-center space-x-2'>
-                            <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>HomeLand</a></div>
+                            <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>RealEstate</a></div>
 
                         </div>
                         {/* <div
