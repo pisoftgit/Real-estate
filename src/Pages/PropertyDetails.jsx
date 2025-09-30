@@ -153,7 +153,7 @@ const PropertyOverview = () => {
                                     <div className="mb-4 md:mb-0">
                                         <p className="text-4xl md:text-5xl font-bold font-ns" style={{ color: DARK_COLOR }}>₹1.35 Cr</p>
                                         <p className="text-sm font-medium font-ns mt-1" style={{ color: TEXT_COLOR }}>
-                                            <span className="text-gray-400 font-normal font-ns">Approx. EMI </span>₹47,000/month
+                                            <span className="text-blue-600 font-normal font-ns">Approx. EMI </span>₹47,000/month
                                         </p>
                                     </div>
                                     <motion.button
