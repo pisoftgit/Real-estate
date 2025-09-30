@@ -5,6 +5,8 @@ import { FaWifi, FaSwimmingPool, FaCar, FaDumbbell, FaShieldAlt } from "react-ic
 import { motion } from "framer-motion";
 import Navbar from "../Components/Navbar";
 import "../App.css"
+import Footer from "../Components/Footer";
+import PopularProperties from "../Components/Explore";
 
 const DARK_COLOR = "#1F2937";
 const TEXT_COLOR = "#4B5563";
@@ -20,7 +22,7 @@ const relatedProjects = [
     },
     {
         id: 2,
-        title: "Greenwood Residency",
+        title: "bluewood Residency",
         location: "Kandivali East, Mumbai",
         price: "₹1.8 Cr onwards",
         imageUrl: "https://cdn.confident-group.com/wp-content/uploads/2024/12/27103036/types-of-real-estate-overview-scaled.jpg",
@@ -92,7 +94,17 @@ const PropertyOverview = () => {
     }, []);
 
     const handleScrollToSection = (sectionId) => {
-        sectionRefs.current[sectionId]?.scrollIntoView({ behavior: "smooth" });
+        const targetElement = sectionRefs.current[sectionId];
+        if (targetElement) {
+            const headerOffset = 150;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - (window.innerHeight / 2) + (targetElement.offsetHeight / 2) - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+            });
+        }
     };
 
 
@@ -107,7 +119,7 @@ const PropertyOverview = () => {
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div className="absolute bottom-0 left-0 py-25 px-8 md:p-28 lg:p-16 text-white max-w-4xl">
+                    <div className="absolute bottom-0 left-0 py-25 px-8 md:p-28 lg:p-17 text-center text-white max-w-4xl mx-auto">
                         <motion.h1
                             className="text-4xl md:text-6xl font-bold font-ns tracking-tight drop-shadow-lg"
                             initial={{ y: 20, opacity: 0 }}
@@ -128,9 +140,8 @@ const PropertyOverview = () => {
                 </header>
 
                 {/* Main Content & Sidebar */}
-                <section className="container mx-auto mt-[-80px] md:mt-[-20px] px-4 relative z-10">
+                <section className="container mx-auto mt-[-80px] md:mt-[-25px] px-4 md:px-8 relative z-10">
                     <div className="lg:grid lg:grid-cols-3 lg:gap-7">
-                        {/* Main Details and Sections */}
                         <div className="lg:col-span-2 space-y-12">
                             <motion.div
                                 className="bg-white rounded-3xl shadow-xl p-6 md:p-10"
@@ -270,6 +281,13 @@ const PropertyOverview = () => {
                     </div>
                 </section>
             </main>
+            <section>
+                   <PopularProperties />             
+            </section>
+
+            <section>
+                <Footer />
+            </section>
         </>
     );
 };

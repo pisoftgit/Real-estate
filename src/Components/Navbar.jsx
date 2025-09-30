@@ -144,7 +144,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                                                             key={idx}
                                                             href="#"
                                                             onClick={onClose}
-                                                            className="text-gray-600 text-sm py-1 hover:text-green-700"
+                                                            className="text-gray-600 text-sm py-1 hover:text-blue-700"
                                                         >
                                                             {subItem}
                                                         </a>
@@ -184,7 +184,7 @@ export default function Navbar() {
     return (
         <nav className="shadow-md shadow-[#426ff542] font-ns text-sm z-20 fixed top-0 w-full">
             <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white py-3">
-                <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
+                <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4 md:space-x-10">
                         <div className='flex flex-row justify-between items-center space-x-2'>
                             <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>HomeLand</a></div>
@@ -250,7 +250,7 @@ export default function Navbar() {
             </div>
 
             <div className="bg-white shadow text-gray-800 py-3 hidden md:block">
-                <div className="max-w-7xl mx-auto px-4 md:px-8">
+                <div className="container mx-auto px-4 md:px-8">
                     <div className="flex justify-center items-center space-x-1 font-semibold">
                         {dropdownItems.map((item) => {
                             const isActive = hoveredDropdown === item.name;

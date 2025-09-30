@@ -16,9 +16,9 @@ import {
     FaChevronDown
 } from 'react-icons/fa'
 import Properties from '../Components/Properties'
-import Explore from '../Components/Explore'
 import Footer from '../Components/Footer'
 import { useNavigate } from 'react-router-dom'
+import PopularProperties from '../Components/Explore'
 
 
 const citiesList = ['Mumbai', 'Delhi', 'Chennai', 'Pune', 'Hyderabad']
@@ -101,15 +101,15 @@ export default function Home() {
         <>
             <Navbar />
 
-            <section className="relative h-[75vh] md:h-[80vh] z-10">
-                <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%] w-[90%] max-w-7xl text-center px-4">
+            <section className="relative h-[75vh] md:h-[80vh] lg:h-[77vh] z-10">
+                <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%] w-[90%] container text-center px-4">
 
                     <div className="text-white text-center space-y-2">
                         <motion.h1
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, ease: 'easeOut' }}
-                            className="text-white text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight font-ns drop-shadow-lg"
+                            className="text-white text-2xl md:text-4xl xl:text-5xl font-extrabold leading-tight font-ns drop-shadow-lg"
                         >
                             Find Your Dream Home with <span className="text-[#cae1ff] font-It">HomeLand</span>
                         </motion.h1>
@@ -129,7 +129,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-white/85 lg:bg-white rounded-xl lg:rounded-4xl border-blue-200 border-2 shadow-xl px-5 py-4 grid grid-cols-2 md:grid-cols-5 lg:flex lg:flex-row lg:flex-wrap items-stretch justify-between gap-2"
+                        className="bg-white/85 lg:bg-white mx-auto md:max-w-5xl rounded-xl md:rounded-4xl border-blue-200 border-2 shadow-xl px-5 lg:px-2 py-4 grid grid-cols-2  md:flex md:flex-row md:flex-wrap items-center justify-center gap-2 lg:gap-4"
                     >
                         <FilterDropdown label="City" icon={FaMapMarkerAlt} options={citiesList} />
                         <FilterDropdown label="Locality" icon={FaBuilding} options={localitiesList} />
@@ -189,7 +189,7 @@ export default function Home() {
             </section>
 
             <section>
-                <Explore />
+                <PopularProperties />
             </section>
             
             <section>

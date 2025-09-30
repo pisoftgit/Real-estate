@@ -85,7 +85,7 @@ export default function Properties() {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative">
+    <section className="container mx-auto px-4 md:px-8 py-8 relative">
       <h2 className="text-md inline-block rounded-3xl md:text-xl px-4 py-1 bg-[#426ff5] text-white font-bold mb-6 font-ns">
         Featured Properties
       </h2>
@@ -113,7 +113,7 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-45 object-cover rounded-xl"
                 />
-                <button onClick={HandleSearch} className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#426ff5] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-[#15832c] transition-colors whitespace-nowrap">
+                <button onClick={HandleSearch} className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#426ff5] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-blue-600 hover:scale-115 transition-all whitespace-nowrap">
                   Show Details
                 </button>
               </div>
@@ -163,7 +163,7 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-38 object-cover"
                 />
-                <button onClick={HandleSearch} className="absolute bottom-2 right-2 bg-white text-sm text-[#426ff5] font-bold px-3 py-1 rounded shadow hover:bg-[#426ff5] hover:text-white transition-all">
+                <button onClick={HandleSearch} className="absolute bottom-2 right-2 bg-white text-sm text-[#426ff5] font-bold px-3 py-1 rounded shadow hover:bg-blue-600 hover:scale-115 hover:text-white transition-all">
                   Show Details
                 </button>
               </div>

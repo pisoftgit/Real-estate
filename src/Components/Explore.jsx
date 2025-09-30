@@ -112,7 +112,7 @@ export default function PopularProperties() {
     
     return (
         <>
-            <section className='max-w-7xl mx-auto px-4 md:px-8 py-8'>
+            <section className='container mx-auto px-4 md:px-8 py-8'>
                 <h2 className='text-xl md:text-2xl font-ns font-semibold text-gray-800 mb-6 relative inline-block'>
                     We've got properties for everyone
                     <span className='absolute left-0 -bottom-1 w-12 h-1 bg-blue-700 rounded-full' />
@@ -199,7 +199,7 @@ export default function PopularProperties() {
             </section>
 
 
-            <section className='max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-6'>
+            <section className='container mx-auto px-4 md:px-8 py-8 space-y-6'>
                 <div className='flex justify-center items-start flex-col lg:justify-between lg:flex-row'>
                     <h2 className='text-md md:text-xl font-ns font-bold px-4 py-1 rounded-4xl bg-[#426ff5] text-white'>
                         Popular Owner Properties

@@ -14,7 +14,7 @@ import Footer from '../Components/Footer';
 import { useNavigate } from 'react-router-dom';
 
 const PRIMARY_COLOR = '#426ff5';
-const HOVER_GREEN = '#15803d';
+const HOVER_blue = '#15803d';
 const ACCENT_TEXT_COLOR = `text-[${PRIMARY_COLOR}]`;
 
 const filterSettings = {
@@ -31,7 +31,7 @@ const filterSettings = {
 const mockProperties = [
     { id: 1, title: '3 BHK Ready to Occupy Flat for sale in Bhavya Dazzle Sarjapur', carpet: '1306 sqft', status: 'Ready to Move', floor: '2 out of 8', builder: 'Bhavya Builders (Operating Since: 2009)', price: '₹1.03 Cr', rate: '₹7,900 per sqft', image: '/hero_bg_1.jpg' },
     { id: 2, title: '3 BHK Ready to Occupy Flat for sale in Sri Nipuna Heritage', carpet: '1320 sqft', status: 'Ready to Move', floor: '5 out of 12', builder: 'Sri Nipuna Builders', price: '₹1.10 Cr', rate: '₹8,300 per sqft', image: '/hero_bg_2.jpg' },
-    { id: 3, title: '2 BHK Under Construction Flat in JP Nagar', carpet: '950 sqft', status: 'Under Construction', floor: '3 out of 6', builder: 'Greenfield Constructions', price: '₹75 Lakh', rate: '₹8,500 per sqft', image: '/hero_bg_4.jpg' },
+    { id: 3, title: '2 BHK Under Construction Flat in JP Nagar', carpet: '950 sqft', status: 'Under Construction', floor: '3 out of 6', builder: 'bluefield Constructions', price: '₹75 Lakh', rate: '₹8,500 per sqft', image: '/hero_bg_4.jpg' },
 ];
 
 const DetailItem = ({ icon: Icon, label, value }) => (
@@ -87,7 +87,7 @@ const PropertyCard = ({ prop, openDetailsDrawer }) => {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
                         <button
-                            className={`hidden md:flex items-center justify-center px-5 py-2 ${primaryBg} text-white rounded-full text-sm font-semibold hover:bg-[${HOVER_GREEN}] transition`}
+                            className={`hidden md:flex items-center justify-center px-5 py-2 ${primaryBg} text-white rounded-full text-sm font-semibold hover:bg-[${HOVER_blue}] transition`}
                         >
                             Contact Builder
                         </button>
@@ -167,7 +167,7 @@ const MobileDetailsDrawer = ({ property, onClose }) => {
                         </p>
 
                         <div className="mt-8 space-y-3">
-                            <button className={`w-full px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_GREEN}] flex items-center justify-center transition`}>
+                            <button className={`w-full px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_blue}] flex items-center justify-center transition`}>
                                 Contact Builder
                             </button>
                             <button className={`w-full px-4 py-3 border-2 ${primaryBorder} ${primaryText} rounded-lg text-base font-bold hover:bg-[${PRIMARY_COLOR}] hover:text-white transition flex items-center justify-center gap-2`}>
@@ -226,7 +226,7 @@ const FilterDropdown = ({ title, options, selectedOption, toggleDropdown, select
                             <div
                                 key={option}
                                 onClick={() => selectOption(title, option)}
-                                className={`px-4 py-2 text-sm flex justify-between items-center cursor-pointer hover:bg-green-50 hover:${primaryText} transition-colors ${selectedOption === option ? `bg-green-100 ${primaryText} font-bold` : 'text-gray-700'
+                                className={`px-4 py-2 text-sm flex justify-between items-center cursor-pointer hover:bg-blue-50 hover:${primaryText} transition-colors ${selectedOption === option ? `bg-blue-100 ${primaryText} font-bold` : 'text-gray-700'
                                     }`}
                             >
                                 <span>{option}</span>
@@ -248,10 +248,10 @@ const FilterBar = ({ filterSettings, selected, openKey, toggleDropdown, selectOp
             className="fixed top-[var(--navbar-height)] w-full bg-white shadow-md z-10 border-t border-gray-100"
             onMouseLeave={closeDropdown}
         >
-            <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+            <div className="container mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
                 <button
                     onClick={openMobileFilterDrawer}
-                    className={`md:hidden flex items-center space-x-2 px-4 py-2 border-2 border-gray-300 ${primaryText} bg-white rounded-lg text-sm font-semibold shadow hover:bg-green-50 transition`}
+                    className={`md:hidden flex items-center space-x-2 px-4 py-2 border-2 border-gray-300 ${primaryText} bg-white rounded-lg text-sm font-semibold shadow hover:bg-blue-50 transition`}
                 >
                     <FaSlidersH />
                     <span>Filters ({Object.keys(selected).length})</span>
@@ -343,7 +343,7 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
                                     key={option}
                                     onClick={() => selectOption(currentSection, option)}
                                     className={`px-3 py-2 text-base rounded-lg flex justify-between items-center cursor-pointer transition-colors border ${selected[currentSection] === option
-                                        ? `${primaryText} border-[${PRIMARY_COLOR}] bg-green-50 font-bold`
+                                        ? `${primaryText} border-[${PRIMARY_COLOR}] bg-blue-50 font-bold`
                                         : 'text-gray-700 border-gray-200 hover:bg-gray-50'
                                         }`}
                                 >
@@ -363,7 +363,7 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
                         </button>
                         <button
                             onClick={handleApplyFilters}
-                            className={`flex-1 px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_GREEN}] transition`}
+                            className={`flex-1 px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_blue}] transition`}
                         >
                             Show Results ({Object.keys(selected).length})
                         </button>
@@ -444,7 +444,7 @@ export default function App() {
         document.body.style.overflow = 'unset';
     };
 
-    const contentPaddingTop = 'pt-[7.5rem] md:pt-[8rem]';
+    const contentPaddingTop = 'pt-[7.5rem] md:pt-[10rem]';
 
     return (
         <div style={{ '--navbar-height': '3.5rem' }}>
@@ -462,7 +462,7 @@ export default function App() {
             />
 
             <div className={`font-sans bg-gray-50 min-h-screen ${contentPaddingTop}`}>
-                <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+                <div className="max-w-7xl px-4 lg:container lg:px-2 mx-auto py-6">
                     <div className="space-y-6">
                         {mockProperties.map((prop) => (
                             <PropertyCard key={prop.id} prop={prop} openDetailsDrawer={openDetailsDrawer} />

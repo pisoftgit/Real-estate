@@ -78,7 +78,7 @@ function SectionTitle({ children }) {
 export default function Footer() {
   return (
     <footer className="bg-gray-100 text-gray-700 text-sm select-none">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 md:px-8 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div>
           <SectionTitle>About HomeLand</SectionTitle>
           <p className="mb-4 leading-relaxed text-gray-600">
@@ -175,7 +175,7 @@ export default function Footer() {
 
       {/* Bottom Links */}
       <div className="bg-gray-200 text-gray-600 text-xs py-3 border-t border-gray-300">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-wrap gap-4 justify-center">
+        <div className="container mx-auto px-4 md:px-8 flex flex-wrap gap-4 justify-center">
           {linkGroups.bottomLinks.map((item, idx) => (
             <AnimatedLink key={idx} href="#" className="px-2 whitespace-nowrap">
               {item}
