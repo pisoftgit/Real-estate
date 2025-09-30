@@ -117,7 +117,7 @@ const AgentsPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="container mx-auto px-4 md:px-8 py-10 flex-grow"
+                className="container mx-auto px-4 md:px-8 mt-15 md:mt-30 py-10 flex-grow"
             >
                 <div className="text-center mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Find Your Real Estate Agent</h1>

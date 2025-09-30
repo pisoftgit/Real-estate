@@ -329,9 +329,9 @@ const PropertyOverview = () => {
 };
 
 const SectionHeader = ({ title, subtitle }) => (
-    <div className="mb-8">
+    <div className="mb-4">
         <h2 className="text-2xl md:text-3xl font-ns font-bold inline-block bg-[#426ff5] text-white rounded-4xl py-1 px-5">{title}</h2>
-        <p className="text-lg mt- font-ns" style={{ color: TEXT_COLOR }}>{subtitle}</p>
+        {/* <p className="text-lg mt- font-ns" style={{ color: TEXT_COLOR }}>{subtitle}</p> */}
     </div>
 );
 

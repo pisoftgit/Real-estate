@@ -72,10 +72,9 @@ const FeaturedAgents = () => {
 
     return (
         <section className="container mx-auto px-4 md:px-8 py-10 font-ns">
-            <div className="flex justify-between items-center mb-8"> {/* Updated div */}
-                {/* Left side: Heading and Subtitle */}
+            <div className="flex flex-col md:flex-row justfiy-start items-start md:justify-between md:items-center gap-2 mb-8">
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold inline-block bg-[#426ff5] text-white rounded-3xl py-1 px-4 font-ns">
+                    <h2 className="text-base md:text-3xl font-bold inline-block bg-[#426ff5] text-white rounded-3xl py-1 px-4 font-ns">
                         Meet Our Top Agents
                     </h2>
                     <p className="text-sm mt-2 font-ns" style={{ color: "#4B5563" }}>
@@ -87,7 +86,7 @@ const FeaturedAgents = () => {
                     <motion.button
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.97 }}
-                        className="inline-flex items-center px-6 py-2 bg-[#426ff5] text-white font-semibold rounded-full shadow-lg transition-colors duration-300 hover:bg-blue-700 text-sm md:text-base"
+                        className="inline-flex items-center px-6 py-2 bg-[#426ff5] text-white font-medium rounded-full shadow-lg transition-colors duration-300 hover:bg-blue-700 text-sm md:text-base"
                     >
                         See All Agents
                         <FaChevronRight className="ml-2" />

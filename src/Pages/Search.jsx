@@ -87,19 +87,19 @@ const PropertyCard = ({ prop, openDetailsDrawer }) => {
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
                         <button
-                            className={`hidden md:flex items-center justify-center px-5 py-2 ${primaryBg} text-white rounded-full text-sm font-semibold hover:bg-[${HOVER_blue}] transition`}
+                            className={`hidden md:flex items-center justify-center px-5 py-2 ${primaryBg} text-white rounded-full text-sm font-semibold hover:scale-110 hover:bg-white hover:text-blue-500 hover:border-blue-500 hover:border-2 transition`}
                         >
                             Contact Builder
                         </button>
                         <button
-                            className={`hidden md:flex items-center justify-center px-5 py-2 border-2 ${primaryBorder} ${primaryText} rounded-full text-sm font-semibold hover:bg-[${PRIMARY_COLOR}] hover:text-white transition gap-1`}
+                            className={`hidden md:flex items-center justify-center px-5 py-2 border-2 ${primaryBorder} ${primaryText} rounded-full text-sm font-semibold hover:bg-blue-500 hover:scale-110 hover:text-white transition gap-1`}
                         >
                             <FaPhoneAlt /> Call Now
                         </button>
 
                         <button
                             onClick={handleViewDetails}
-                            className={`hidden md:flex items-center justify-center px-5 py-2 border-2 ${primaryBorder} ${primaryText} rounded-full text-sm font-semibold hover:bg-[${PRIMARY_COLOR}] hover:text-white transition gap-1`}
+                            className={`hidden md:flex items-center justify-center px-5 py-2 border-2 ${primaryBorder} ${primaryText} rounded-full text-sm hover:scale-110 font-semibold  hover:bg-blue-500 hover:text-white transition gap-1`}
                         >
                             View Details
                         </button>
@@ -120,6 +120,10 @@ const MobileDetailsDrawer = ({ property, onClose }) => {
     const primaryBg = `bg-[${PRIMARY_COLOR}]`;
     const primaryText = `text-[${PRIMARY_COLOR}]`;
     const primaryBorder = `border-[${PRIMARY_COLOR}]`;
+    const navigate = useNavigate()
+    const handleViewDetails = ()=>{
+        navigate("/PropertyDetails")
+    }
 
     return (
         <AnimatePresence>
@@ -172,6 +176,9 @@ const MobileDetailsDrawer = ({ property, onClose }) => {
                             </button>
                             <button className={`w-full px-4 py-3 border-2 ${primaryBorder} ${primaryText} rounded-lg text-base font-bold hover:bg-[${PRIMARY_COLOR}] hover:text-white transition flex items-center justify-center gap-2`}>
                                 <FaPhoneAlt /> Get Phone No.
+                            </button>
+                            <button onClick={handleViewDetails} className={`w-full px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_blue}] flex items-center justify-center transition`}>
+                                Property Details
                             </button>
                         </div>
                     </div>
