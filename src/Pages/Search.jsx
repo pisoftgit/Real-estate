@@ -444,7 +444,7 @@ export default function App() {
         document.body.style.overflow = 'unset';
     };
 
-    const contentPaddingTop = 'pt-[7.5rem] md:pt-[10rem]';
+    const contentPaddingTop = 'pt-[7.5rem] md:pt-[10rem] lg:pt-[7rem]';
 
     return (
         <div style={{ '--navbar-height': '3.5rem' }}>

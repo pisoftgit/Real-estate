@@ -101,7 +101,7 @@ export default function Home() {
         <>
             <Navbar />
 
-            <section className="relative h-[75vh] md:h-[80vh] lg:h-[77vh] z-10">
+            <section className="relative h-[75vh] md:h-[80vh] lg:h-[750px] z-10">
                 <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%] w-[90%] container text-center px-4">
 
                     <div className="text-white text-center space-y-2">
