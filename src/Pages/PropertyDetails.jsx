@@ -4,10 +4,56 @@ import { MdBalcony } from "react-icons/md";
 import { FaWifi, FaSwimmingPool, FaCar, FaDumbbell, FaShieldAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Navbar from "../Components/Navbar";
+import "../App.css"
 
 const DARK_COLOR = "#1F2937";
 const TEXT_COLOR = "#4B5563";
-const ACCENT_COLOR = "#426ff5"; 
+const ACCENT_COLOR = "#426ff5";
+
+const relatedProjects = [
+    {
+        id: 1,
+        title: "Skyline Heights",
+        location: "Andheri West, Mumbai",
+        price: "₹2.5 Cr onwards",
+        imageUrl: "hero_bg_4.jpg",
+    },
+    {
+        id: 2,
+        title: "Greenwood Residency",
+        location: "Kandivali East, Mumbai",
+        price: "₹1.8 Cr onwards",
+        imageUrl: "https://cdn.confident-group.com/wp-content/uploads/2024/12/27103036/types-of-real-estate-overview-scaled.jpg",
+    },
+    {
+        id: 3,
+        title: "Coastal Villas",
+        location: "Virar, Mumbai",
+        price: "₹95 Lac onwards",
+        imageUrl: "https://photos.zillowstatic.com/fp/7147e670e881aaf4689aa7a7c36c707b-cc_ft_960.jpg",
+    },
+    {
+        id: 4,
+        title: "Urban Oasis",
+        location: "Bandra, Mumbai",
+        price: "₹3.2 Cr onwards",
+        imageUrl: "https://photos.zillowstatic.com/fp/88da7907bab8a7f4ebbc7e8ba9dcb642-cc_ft_960.jpg",
+    },
+    {
+        id: 5,
+        title: "The Royal Estate",
+        location: "Worli, Mumbai",
+        price: "₹5.0 Cr onwards",
+        imageUrl: "https://photos.zillowstatic.com/fp/cf4a456da7cea618ddfbfc38915202d6-p_c.jpg",
+    },
+    {
+        id: 6,
+        title: "Hillside Homes",
+        location: "Thane, Mumbai",
+        price: "₹1.2 Cr onwards",
+        imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX_8CNg2qr_fqQmmqNkVfbPn3mVNW4nqh6Duh1TQNq9wzwMVqIjv3cT6GP51vDYolCQzA&usqp=CAU",
+    },
+];
 
 const PropertyOverview = () => {
     const sections = {
@@ -48,6 +94,7 @@ const PropertyOverview = () => {
     const handleScrollToSection = (sectionId) => {
         sectionRefs.current[sectionId]?.scrollIntoView({ behavior: "smooth" });
     };
+
 
     return (
         <>
@@ -157,12 +204,16 @@ const PropertyOverview = () => {
                                         <Amenity icon={<FaCar />} label="Parking" />
                                         <Amenity icon={<FaWifi />} label="Wi-Fi" />
                                         <Amenity icon={<FaShieldAlt />} label="24/7 Security" />
-                                        
                                     </div>
                                 </div>
 
                                 <div ref={(el) => (sectionRefs.current.locality = el)} id="locality" >
                                     <SectionHeader title="Locality Details" subtitle="Connectivity and convenience at your doorstep." />
+                                    <p className="text-lg leading-relaxed mt-8" style={{ color: TEXT_COLOR }}>
+                                        The Aspen Park Residence is conveniently located at a prime location in Goregaon East. The full address is:
+                                        <br />
+                                        <span className="font-semibold font-ns" style={{ color: DARK_COLOR }}>Plot No. 123, Aspen Park, Aarey Road, Goregaon East, Mumbai, Maharashtra 400065</span>
+                                    </p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 mt-8">
                                         <LocalityItem icon={<FaTrain />} label="Metro Station" value="0.5 km" />
                                         <LocalityItem icon={<FaSchool />} label="School" value="1.0 km" />
@@ -170,13 +221,29 @@ const PropertyOverview = () => {
                                         <LocalityItem icon={<FaShoppingBag />} label="Shopping Mall" value="2.5 km" />
                                         <LocalityItem icon={<FaCar />} label="Highway Access" value="2.0 km" />
                                     </div>
+                                    <div className="mt-8 h-96 w-full rounded-2xl overflow-hidden shadow-xl">
+                                        <iframe
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15082.723381650367!2d72.8647038!3d19.11796695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7189a87d60f%3A0x6b4c106093510522!2sGoregaon%20East%2C%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1699999999999!5m2!1sen!2sin"
+                                            width="100%"
+                                            height="100%"
+                                            style={{ border: 0 }}
+                                            allowFullScreen=""
+                                            loading="lazy"
+                                            referrerPolicy="no-referrer-when-downgrade"
+                                            title="Google Map of Goregaon East"
+                                        ></iframe>
+                                    </div>
                                 </div>
 
-                                <div ref={(el) => (sectionRefs.current.builder = el)} id="builder" className="py-16">
+                                <div ref={(el) => (sectionRefs.current.builder = el)} id="builder" className="pb-16 pt-1">
                                     <SectionHeader title="About the Builder" subtitle="A legacy of excellence and trust in real estate." />
                                     <p className="text-lg leading-relaxed mt-8" style={{ color: TEXT_COLOR }}>
                                         Developed by <span className="font-semibold font-ns" style={{ color: DARK_COLOR }}>XYZ Developers</span>, a distinguished name in Mumbai's real estate market with over 15 years of excellence. Known for their commitment to quality and timely delivery, XYZ Developers has a portfolio of high-end residential projects that are celebrated for their modern design and strategic locations. Aspen Park stands as a testament to their vision.
                                     </p>
+                                    <div className="mt-12">
+                                        <SectionHeader title="Related Works" subtitle="Explore other prestigious projects by XYZ Developers." />
+                                        <RelatedWorks projects={relatedProjects} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -188,11 +255,10 @@ const PropertyOverview = () => {
                                     <button
                                         key={key}
                                         onClick={() => handleScrollToSection(key)}
-                                        className={`w-full flex items-center justify-between p-3 rounded-lg text-left font-ns font-medium transition-all duration-300 ${
-                                            activeSection === key
-                                                ? `text-white shadow-md transform scale-[1.02]`
-                                                : "text-gray-700 hover:bg-gray-100"
-                                        }`}
+                                        className={`w-full flex items-center justify-between p-3 rounded-lg text-left font-ns font-medium transition-all duration-300 ${activeSection === key
+                                            ? `text-white shadow-md transform scale-[1.02]`
+                                            : "text-gray-700 hover:bg-gray-100"
+                                            }`}
                                         style={activeSection === key ? { backgroundColor: ACCENT_COLOR } : {}}
                                     >
                                         <span>{value}</span>
@@ -207,7 +273,6 @@ const PropertyOverview = () => {
         </>
     );
 };
-
 
 const SectionHeader = ({ title, subtitle }) => (
     <div className="mb-8">
@@ -249,5 +314,64 @@ const LocalityItem = ({ icon, label, value }) => (
         </div>
     </div>
 );
+
+const RelatedWorks = ({ projects }) => {
+    const scrollRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - scrollRef.current.offsetLeft);
+        setScrollLeft(scrollRef.current.scrollLeft);
+    };
+
+    const handleMouseLeave = () => {
+        setIsDragging(false);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - scrollRef.current.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    return (
+        <div
+            className="overflow-x-auto scrollbar-hidden"
+            ref={scrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            style={{ cursor: isDragging ? "grabbing" : "grab" }}
+        >
+            <div className="flex space-x-6 pb-4">
+                {projects.map((project) => (
+                    <motion.div
+                        key={project.id}
+                        className="flex-shrink-0 w-80 rounded-2xl overflow-hidden shadow-lg bg-white"
+                        whileHover={{ y: -5 }}
+                        transition={{ type: "tween", stiffness: 700 }}
+                    >
+                        <img src={project.imageUrl} alt={project.title} className="w-full h-40 object-cover" />
+                        <div className="p-6">
+                            <h4 className="text-xl font-bold font-ns" style={{ color: DARK_COLOR }}>{project.title}</h4>
+                            <p className="text-sm font-ns mt-1" style={{ color: TEXT_COLOR }}>{project.location}</p>
+                            <p className="text-lg font-bold font-ns mt-3" style={{ color: ACCENT_COLOR }}>{project.price}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default PropertyOverview;
