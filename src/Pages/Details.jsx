@@ -58,10 +58,8 @@ const Details = () => {
                 </motion.div>
             )}
 
-            {/* Sections */}
             <div className="pt-6 space-y-16 max-w-6xl mx-auto px-4">
                 <div className="bg-white rounded-lg shadow border p-6 max-w-6xl mx-auto mt-10 font-sans">
-                    {/* Title and Price */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                         <div>
                             <h2 className="text-2xl font-semibold text-gray-800">₹1.98 Cr</h2>
@@ -74,7 +72,6 @@ const Details = () => {
                         </button>
                     </div>
 
-                    {/* Images */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                         <img src="/hero_bg_3.jpg" alt="Living Room" className="rounded-lg h-40 w-full object-cover" />
                         <img src="/hero_bg_3.jpg" alt="Garden" className="rounded-lg h-40 w-full object-cover" />
@@ -82,7 +79,6 @@ const Details = () => {
                         <img src="/hero_bg_3.jpg" alt="Building" className="rounded-lg h-40 w-full object-cover" />
                     </div>
 
-                    {/* Icons Section */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 text-sm text-gray-700">
                         <div className="flex items-center gap-2"><FaBed className="text-gray-600" />2 Beds</div>
                         <div className="flex items-center gap-2"><FaBath className="text-gray-600" />2 Baths</div>
@@ -90,10 +86,8 @@ const Details = () => {
                         <div className="flex items-center gap-2"><FaCouch className="text-gray-600" />Semi-Furnished</div>
                     </div>
 
-                    {/* Divider */}
                     <hr className="my-6" />
 
-                    {/* Property Details Grid */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-sm text-gray-800">
                         <div>
                             <p className="text-gray-500">Super Built-Up Area</p>
@@ -129,7 +123,6 @@ const Details = () => {
                         </div>
                     </div>
 
-                    {/* Footer Buttons */}
                     <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                         <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-sm px-4 py-2 rounded">
                             <MdDownload className="text-lg" /> Download Brochure

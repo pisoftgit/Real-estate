@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-    FaChevronDown, 
-    FaTimes, 
-    FaPhoneAlt, 
-    FaMapMarkerAlt, 
-    FaBuilding, 
+import {
+    FaChevronDown,
+    FaTimes,
+    FaPhoneAlt,
+    FaMapMarkerAlt,
+    FaBuilding,
     FaSlidersH,
-    FaCheck 
+    FaCheck
 } from 'react-icons/fa';
-import Navbar from '../Components/Navbar2'; 
+import Navbar from '../Components/Navbar2';
 import Footer from '../Components/Footer';
+import { useNavigate } from 'react-router-dom';
 
-const PRIMARY_COLOR = '#1fa141';
+const PRIMARY_COLOR = '#426ff5';
 const HOVER_GREEN = '#15803d';
 const ACCENT_TEXT_COLOR = `text-[${PRIMARY_COLOR}]`;
 
@@ -45,6 +46,11 @@ const PropertyCard = ({ prop, openDetailsDrawer }) => {
     const primaryBg = `bg-[${PRIMARY_COLOR}]`;
     const primaryText = `text-[${PRIMARY_COLOR}]`;
     const primaryBorder = `border-[${PRIMARY_COLOR}]`;
+    const navigate = useNavigate()
+
+    const handleViewDetails = () => {
+        navigate("/PropertyDetails")
+    }
 
     return (
         <motion.div
@@ -90,8 +96,9 @@ const PropertyCard = ({ prop, openDetailsDrawer }) => {
                         >
                             <FaPhoneAlt /> Call Now
                         </button>
-                        
+
                         <button
+                            onClick={handleViewDetails}
                             className={`hidden md:flex items-center justify-center px-5 py-2 border-2 ${primaryBorder} ${primaryText} rounded-full text-sm font-semibold hover:bg-[${PRIMARY_COLOR}] hover:text-white transition gap-1`}
                         >
                             View Details
@@ -184,25 +191,24 @@ const FilterDropdown = ({ title, options, selectedOption, toggleDropdown, select
     };
 
     return (
-        <div 
-            className="relative flex-shrink-0" 
+        <div
+            className="relative flex-shrink-0"
         >
             <button
                 onMouseEnter={() => toggleDropdown(title)}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${
-                    selectedOption 
-                        ? `${primaryBg} text-white shadow-md` 
-                        : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300'
-                }`}
+                className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-200 border ${selectedOption
+                    ? `${primaryBg} text-white shadow-md`
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300'
+                    }`}
             >
                 <span>{selectedOption || title}</span>
                 {selectedOption && (
                     <FaTimes
                         className="text-xs ml-1 p-0.5 rounded-full hover:bg-white/30"
-                        onClick={(e) => clearSelection(title, e)} 
+                        onClick={(e) => clearSelection(title, e)}
                     />
                 )}
-                <FaChevronDown 
+                <FaChevronDown
                     className={`text-xs ml-1 transition-transform ${isOpen ? 'rotate-180' : 'rotate-0'} ${selectedOption ? 'text-white' : 'text-gray-400'}`}
                 />
             </button>
@@ -220,9 +226,8 @@ const FilterDropdown = ({ title, options, selectedOption, toggleDropdown, select
                             <div
                                 key={option}
                                 onClick={() => selectOption(title, option)}
-                                className={`px-4 py-2 text-sm flex justify-between items-center cursor-pointer hover:bg-green-50 hover:${primaryText} transition-colors ${
-                                    selectedOption === option ? `bg-green-100 ${primaryText} font-bold` : 'text-gray-700'
-                                }`}
+                                className={`px-4 py-2 text-sm flex justify-between items-center cursor-pointer hover:bg-green-50 hover:${primaryText} transition-colors ${selectedOption === option ? `bg-green-100 ${primaryText} font-bold` : 'text-gray-700'
+                                    }`}
                             >
                                 <span>{option}</span>
                                 {selectedOption === option && <FaCheck className="text-xs" />}
@@ -239,9 +244,9 @@ const FilterBar = ({ filterSettings, selected, openKey, toggleDropdown, selectOp
     const primaryText = `text-[${PRIMARY_COLOR}]`;
 
     return (
-        <div 
+        <div
             className="fixed top-[var(--navbar-height)] w-full bg-white shadow-md z-10 border-t border-gray-100"
-            onMouseLeave={closeDropdown} 
+            onMouseLeave={closeDropdown}
         >
             <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
                 <button
@@ -267,7 +272,7 @@ const FilterBar = ({ filterSettings, selected, openKey, toggleDropdown, selectOp
                         />
                     ))}
                     {Object.keys(selected).length > 0 && (
-                        <button 
+                        <button
                             onClick={handleClearAll}
                             className="text-xs text-gray-500 hover:text-red-500 ml-2 font-semibold"
                         >
@@ -288,9 +293,9 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
     const handleApplyFilters = () => {
         onClose();
     };
-    
+
     const handleClearAllMobile = () => {
-        selectOption(null); 
+        selectOption(null);
     };
 
     return (
@@ -323,11 +328,10 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
                                 <button
                                     key={key}
                                     onClick={() => setCurrentSection(key)}
-                                    className={`w-full text-left p-4 text-sm font-semibold transition-colors border-l-4 ${
-                                        currentSection === key 
-                                            ? `bg-white ${primaryText} border-[${PRIMARY_COLOR}]`
-                                            : 'text-gray-600 border-transparent hover:bg-gray-100'
-                                    }`}
+                                    className={`w-full text-left p-4 text-sm font-semibold transition-colors border-l-4 ${currentSection === key
+                                        ? `bg-white ${primaryText} border-[${PRIMARY_COLOR}]`
+                                        : 'text-gray-600 border-transparent hover:bg-gray-100'
+                                        }`}
                                 >
                                     {key}
                                 </button>
@@ -338,11 +342,10 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
                                 <div
                                     key={option}
                                     onClick={() => selectOption(currentSection, option)}
-                                    className={`px-3 py-2 text-base rounded-lg flex justify-between items-center cursor-pointer transition-colors border ${
-                                        selected[currentSection] === option
-                                            ? `${primaryText} border-[${PRIMARY_COLOR}] bg-green-50 font-bold`
-                                            : 'text-gray-700 border-gray-200 hover:bg-gray-50'
-                                    }`}
+                                    className={`px-3 py-2 text-base rounded-lg flex justify-between items-center cursor-pointer transition-colors border ${selected[currentSection] === option
+                                        ? `${primaryText} border-[${PRIMARY_COLOR}] bg-green-50 font-bold`
+                                        : 'text-gray-700 border-gray-200 hover:bg-gray-50'
+                                        }`}
                                 >
                                     <span>{option}</span>
                                     {selected[currentSection] === option && <FaCheck className={`text-sm ${primaryText}`} />}
@@ -352,13 +355,13 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
                     </div>
 
                     <div className="p-4 border-t border-gray-100 flex-shrink-0 flex justify-between gap-3">
-                        <button 
+                        <button
                             onClick={handleClearAllMobile}
                             className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-base font-bold text-gray-700 hover:bg-gray-50 transition"
                         >
                             Clear All
                         </button>
-                        <button 
+                        <button
                             onClick={handleApplyFilters}
                             className={`flex-1 px-4 py-3 ${primaryBg} text-white rounded-lg text-base font-bold hover:bg-[${HOVER_GREEN}] transition`}
                         >
@@ -374,8 +377,8 @@ const MobileFilterDrawer = ({ filterSettings, selected, selectOption, onClose })
 export default function App() {
     const [selected, setSelected] = useState({});
     const [selectedProperty, setSelectedProperty] = useState(null);
-    const [openKey, setOpenKey] = useState(null); 
-    const [isMobileFilterOpen, setMobileFilterOpen] = useState(false); 
+    const [openKey, setOpenKey] = useState(null);
+    const [isMobileFilterOpen, setMobileFilterOpen] = useState(false);
 
     const toggleDropdown = (key) => {
         setOpenKey(key);
@@ -400,10 +403,10 @@ export default function App() {
                 delete newSel[key];
                 return newSel;
             }
-            
+
             return { ...prev, [key]: newSelection };
         });
-        
+
     };
 
     const clearSelection = (key, e) => {
@@ -441,12 +444,12 @@ export default function App() {
         document.body.style.overflow = 'unset';
     };
 
-    const contentPaddingTop = 'pt-[7.5rem] md:pt-[10rem]'; 
+    const contentPaddingTop = 'pt-[7.5rem] md:pt-[8rem]';
 
     return (
-        <div style={{ '--navbar-height': '4rem' }}> 
+        <div style={{ '--navbar-height': '3.5rem' }}>
             <Navbar />
-            <FilterBar 
+            <FilterBar
                 filterSettings={filterSettings}
                 selected={selected}
                 openKey={openKey}
@@ -475,7 +478,7 @@ export default function App() {
 
                 <AnimatePresence>
                     {isMobileFilterOpen && (
-                        <MobileFilterDrawer 
+                        <MobileFilterDrawer
                             filterSettings={filterSettings}
                             selected={selected}
                             selectOption={selectOption}

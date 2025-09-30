@@ -48,14 +48,14 @@ const linkGroups = {
   ],
 };
 
-const brandGreen = "#1fa141";
+const brandblue = "#426ff5";
 const brandGold = "#FFD700";
 
 function AnimatedLink({ href, children }) {
   return (
     <motion.a
       href={href}
-      whileHover={{ scale: 1.1, color: brandGreen }}
+      whileHover={{ scale: 1.1, color: brandblue }}
       transition={{ type: "spring", stiffness: 300 }}
       className="hover:underline cursor-pointer"
     >
@@ -67,7 +67,7 @@ function AnimatedLink({ href, children }) {
 function SectionTitle({ children }) {
   return (
     <h4
-      style={{ color: brandGreen }}
+      style={{ color: brandblue }}
       className="font-semibold mb-4 text-lg tracking-wide"
     >
       {children}

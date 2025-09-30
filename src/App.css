@@ -9,7 +9,7 @@
 
 .ripple-loader div {
   position: absolute;
-  border: 4px solid #097a1c;
+  border: 4px solid #426ff5;
   opacity: 1;
   border-radius: 50%;
   animation: ripple 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;

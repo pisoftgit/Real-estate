@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 // import { FaImage } from 'react-icons/fa';
 
-const PRIMARY_COLOR = '#1fa141'
+const PRIMARY_COLOR = '#426ff5'
 const propertyCategories = [
     {
         title: 'Owner Properties',
@@ -115,7 +115,7 @@ export default function PopularProperties() {
             <section className='max-w-7xl mx-auto px-4 md:px-8 py-8'>
                 <h2 className='text-xl md:text-2xl font-ns font-semibold text-gray-800 mb-6 relative inline-block'>
                     We've got properties for everyone
-                    <span className='absolute left-0 -bottom-1 w-12 h-1 bg-green-700 rounded-full' />
+                    <span className='absolute left-0 -bottom-1 w-12 h-1 bg-blue-700 rounded-full' />
                 </h2>
 
                 <div className="hidden lg:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -144,10 +144,10 @@ export default function PopularProperties() {
 
                             {item.buttonText && (
                                 <button
-                                    className="absolute bottom-3 right-3 bg-green-700 text-white text-sm font-semibold px-3 py-1.5 rounded opacity-0 pointer-events-none
+                                    className="absolute bottom-3 right-3 bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded opacity-0 pointer-events-none
             transition-opacity duration-300 ease-in-out
             group-hover:opacity-100 group-hover:pointer-events-auto
-            shadow-lg hover:bg-green-800"
+            shadow-lg hover:bg-blue-800"
                                 >
                                     {item.buttonText}
                                 </button>
@@ -184,10 +184,10 @@ export default function PopularProperties() {
 
                                 {item.buttonText && (
                                     <button
-                                        className="absolute bottom-3 right-3 bg-green-700 text-white text-sm font-semibold px-3 py-1.5 rounded opacity-0 pointer-events-none
+                                        className="absolute bottom-3 right-3 bg-blue-700 text-white text-sm font-semibold px-3 py-1.5 rounded opacity-0 pointer-events-none
               transition-opacity duration-300 ease-in-out
               group-hover:opacity-100 group-hover:pointer-events-auto
-              shadow-lg hover:bg-green-800"
+              shadow-lg hover:bg-blue-800"
                                     >
                                         {item.buttonText}
                                     </button>
@@ -201,12 +201,12 @@ export default function PopularProperties() {
 
             <section className='max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-6'>
                 <div className='flex justify-center items-start flex-col lg:justify-between lg:flex-row'>
-                    <h2 className='text-md md:text-xl font-ns font-bold px-4 py-1 rounded-4xl bg-[#1fa141] text-white'>
+                    <h2 className='text-md md:text-xl font-ns font-bold px-4 py-1 rounded-4xl bg-[#426ff5] text-white'>
                         Popular Owner Properties
                     </h2>
                     <a
                         href='#'
-                        className='text-sm text-green-700 font-ns font-semibold hover:underline px-4 py-2'
+                        className='text-sm text-blue-700 font-ns font-semibold hover:underline px-4 py-2'
                     >
                         See all Properties→
                     </a>
@@ -245,7 +245,7 @@ export default function PopularProperties() {
                                     <p className='text-xs text-gray-700'>{property.status}</p>
                                 </div>
                                 <div className='px-3 pb-3'>
-                                    <button onClick={HandleSearch} className='bg-green-700 hover:bg-green-700 text-white text-sm font-ns font-semibold px-4 py-1 rounded-xl'>
+                                    <button onClick={HandleSearch} className='bg-blue-700 hover:bg-blue-700 text-white text-sm font-ns font-semibold px-4 py-1 rounded-xl'>
                                         View Details
                                     </button>
                                 </div>
@@ -285,7 +285,7 @@ export default function PopularProperties() {
                             >
                                 <h3 className='text-lg font-ns font-bold'>{property.bhk}</h3>
                                 <p className='text-sm text-gray-200'>{property.location}</p>
-                                <p className='text-green-300 font-ns font-semibold'>
+                                <p className='text-blue-300 font-ns font-semibold'>
                                     {property.price} {property.size && ` | ${property.size}`}
                                 </p>
                                 <div className='flex justify-between w-full text-sm text-gray-300'>

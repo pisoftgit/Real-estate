@@ -15,7 +15,7 @@ import {
     FaTimes,
 } from 'react-icons/fa';
 
-const PRIMARY_COLOR = '#1fa141';
+const PRIMARY_COLOR = '#426ff5';
 const BADGE_COLOR = '#FFD700';
 
 const dropdownItems = [
@@ -118,7 +118,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                                         {/* Parent Item */}
                                         <button
                                             onClick={() => toggleItem(item.name)}
-                                            className="w-full flex justify-between items-center px-3 py-2 text-left rounded-md hover:bg-green-50 transition-colors"
+                                            className="w-full flex justify-between items-center px-3 py-2 text-left rounded-md hover:bg-sky-50 transition-colors"
                                         >
                                             <span className="font-bold font-ns text-gray-800 flex items-center space-x-2">
                                                 <Icon className="text-base" style={{ color: primaryColor }} />
@@ -182,12 +182,11 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="shadow-md shadow-[#a3f1b86b] font-ns text-sm z-20 fixed top-0 w-full">
+        <nav className="shadow-md shadow-[#426ff542] font-ns text-sm z-20 fixed top-0 w-full">
             <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white py-3">
                 <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4 md:space-x-10">
                         <div className='flex flex-row justify-between items-center space-x-2'>
-                            <img src='/homeland.png' className='h-10 w-10'></img>
                             <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>HomeLand</a></div>
 
                         </div>
@@ -214,7 +213,7 @@ export default function Navbar() {
                                             <div
                                                 key={city}
                                                 onClick={() => handleCityChange(city)}
-                                                className={`px-4 py-2 hover:bg-gray-100 flex justify-between items-center cursor-pointer ${currentCity === city ? 'bg-green-50 font-bold' : ''}`}
+                                                className={`px-4 py-2 hover:bg-gray-100 flex justify-between items-center cursor-pointer ${currentCity === city ? 'bg-blue-50 font-bold' : ''}`}
                                             >
                                                 {city}
                                                 {currentCity === city && <FaCheck className="text-xs" style={{ color: PRIMARY_COLOR }} />}
@@ -280,7 +279,7 @@ export default function Navbar() {
                                                 initial="initial"
                                                 animate="animate"
                                                 exit="exit"
-                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-green-50 border border-gray-100 shadow-lg rounded w-56 z-50 overflow-hidden"
+                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white border border-gray-100 shadow-lg rounded w-56 z-50 overflow-hidden"
                                             >
                                                 {item.subItems.map((sub, idx) => {
                                                     const SubIcon = item.icon;
@@ -288,7 +287,7 @@ export default function Navbar() {
                                                         <a
                                                             key={idx}
                                                             href="#"
-                                                            className="px-4 py-2 text-gray-700 flex items-center space-x-2 hover:bg-green-50 hover:text-green-700 transition-colors"
+                                                            className="px-4 py-2 text-gray-700 flex items-center space-x-2 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                                                         >
                                                             <SubIcon className="text-sm" style={{ color: PRIMARY_COLOR }} />
                                                             <span>{sub}</span>

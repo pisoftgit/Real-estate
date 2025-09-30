@@ -86,7 +86,7 @@ export default function Properties() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 md:px-8 py-8 relative">
-      <h2 className="text-md inline-block rounded-3xl md:text-xl px-4 py-1 bg-[#1fa141] text-white font-bold mb-6 font-ns">
+      <h2 className="text-md inline-block rounded-3xl md:text-xl px-4 py-1 bg-[#426ff5] text-white font-bold mb-6 font-ns">
         Featured Properties
       </h2>
 
@@ -113,7 +113,7 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-45 object-cover rounded-xl"
                 />
-                <button onClick={HandleSearch} className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#1fa141] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-[#15832c] transition-colors whitespace-nowrap">
+                <button onClick={HandleSearch} className="absolute bottom-[-12px] left-1/2 transform z-2 -translate-x-1/2 bg-[#426ff5] text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg hover:bg-[#15832c] transition-colors whitespace-nowrap">
                   Show Details
                 </button>
               </div>
@@ -128,7 +128,7 @@ export default function Properties() {
                 <p className="text-sm text-gray-200">
                   {property.locality}, {property.city}
                 </p>
-                <p className="text-green-300 font-semibold">₹ {property.price}</p>
+                <p className="text-blue-300 font-semibold">₹ {property.price}</p>
                 <div className="flex justify-between w-full text-sm text-gray-300">
                   <span>{property.bhk}</span>
                   <span>By: {property.postedBy}</span>
@@ -163,14 +163,14 @@ export default function Properties() {
                   alt={property.title}
                   className="w-full h-38 object-cover"
                 />
-                <button onClick={HandleSearch} className="absolute bottom-2 right-2 bg-white text-sm text-[#1fa141] font-bold px-3 py-1 rounded shadow hover:bg-[#1fa141] hover:text-white transition-all">
+                <button onClick={HandleSearch} className="absolute bottom-2 right-2 bg-white text-sm text-[#426ff5] font-bold px-3 py-1 rounded shadow hover:bg-[#426ff5] hover:text-white transition-all">
                   Show Details
                 </button>
               </div>
               <div className="p-4 space-y-1">
                 <h3 className="text-base font-bold text-gray-800">{property.title}</h3>
                 <p className="text-sm text-gray-600">{property.locality}, {property.city}</p>
-                <p className="text-[#1fa141] font-semibold">₹ {property.price}</p>
+                <p className="text-[#426ff5] font-semibold">₹ {property.price}</p>
                 <div className="flex justify-between text-xs text-gray-500 pt-1">
                   <span>{property.bhk}</span>
                   <span>By: {property.postedBy}</span>

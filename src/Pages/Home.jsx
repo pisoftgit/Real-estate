@@ -53,9 +53,9 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
             onMouseLeave={() => setIsOpen(false)}
         >
             <button
-                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-green-500 w-full md:w-auto text-sm bg-white"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-blue-500 w-full md:w-auto text-sm bg-white"
             >
-                <Icon className="text-green-500 text-base" />
+                <Icon className="text-blue-500 text-base" />
                 <span>{selected}</span>
                 <FaChevronDown className="text-xs text-gray-400" />
             </button>
@@ -67,7 +67,7 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="absolute top-full mt-2 left-0 bg-green-50 border border-green-300 shadow-md rounded-md z-50 w-48"
+                        className="absolute top-full mt-2 left-0 bg-white border border-blue-300 shadow-md rounded-md z-50 w-48"
                     >
                         {options.map((opt, i) => (
                             <div
@@ -76,7 +76,7 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
                                     setSelected(opt)
                                     setIsOpen(false)
                                 }}
-                                className="px-4 py-2 hover:bg-green-100 hover:text-green-600 cursor-pointer text-sm"
+                                className="px-4 py-2 hover:bg-blue-100 hover:text-blue-600 cursor-pointer text-sm"
                             >
                                 {opt}
                             </div>
@@ -111,7 +111,7 @@ export default function Home() {
                             transition={{ duration: 0.6, ease: 'easeOut' }}
                             className="text-white text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight font-ns drop-shadow-lg"
                         >
-                            Find Your Dream Home with <span className="text-[#1fa141]">HomeLand</span>
+                            Find Your Dream Home with <span className="text-[#cae1ff] font-It">HomeLand</span>
                         </motion.h1>
                         
                         <motion.h2
@@ -129,7 +129,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-white/85 lg:bg-white rounded-xl lg:rounded-4xl border-green-200 border-2 shadow-xl px-5 py-4 grid grid-cols-2 md:grid-cols-5 lg:flex lg:flex-row lg:flex-wrap items-stretch justify-between gap-2"
+                        className="bg-white/85 lg:bg-white rounded-xl lg:rounded-4xl border-blue-200 border-2 shadow-xl px-5 py-4 grid grid-cols-2 md:grid-cols-5 lg:flex lg:flex-row lg:flex-wrap items-stretch justify-between gap-2"
                     >
                         <FilterDropdown label="City" icon={FaMapMarkerAlt} options={citiesList} />
                         <FilterDropdown label="Locality" icon={FaBuilding} options={localitiesList} />
@@ -142,7 +142,7 @@ export default function Home() {
                             whileTap={{ scale: 0.95 }}
                             onClick={HandleSearch}
                             whileHover={{ scale: 1.03 }}
-                            className="bg-[#1fa141] text-white font-bold rounded-full px-6 py-2 flex items-center justify-center hover:bg-green-700 transition w-full md:w-auto col-span-full"
+                            className="bg-[#426ff5] text-white font-bold rounded-full px-6 py-2 flex items-center justify-center hover:bg-blue-700 transition w-full md:w-auto col-span-full"
                         >
                             <FaSearch className="mr-2" onClick={HandleSearch} />
                             Search

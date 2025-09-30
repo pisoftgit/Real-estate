@@ -15,7 +15,7 @@ import {
     FaTimes,
 } from 'react-icons/fa';
 
-const PRIMARY_COLOR = '#1fa141';
+const PRIMARY_COLOR = '#426ff5';
 const BADGE_COLOR = '#FFD700';
 
 const dropdownItems = [
@@ -181,12 +181,11 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="shadow-md shadow-[#a3f1b86b] font-ns text-sm z-20 fixed top-0 w-full">
+        <nav className="shadow-md shadow-[#426ff55b] font-ns text-sm z-20 fixed top-0 w-full">
             <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white py-3">
                 <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4 md:space-x-10">
                         <div className='flex flex-row justify-between items-center space-x-2'>
-                            <img src='/homeland.png' className='h-10 w-10'></img>
                             <div className="text-xl md:text-2xl font-extrabold tracking-tight cursor-pointer"><a href='/'>HomeLand</a></div>
 
                         </div>

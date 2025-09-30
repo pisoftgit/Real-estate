@@ -6,7 +6,8 @@ import Loader from './Components/Loader';
 // Pages
 import Home from './Pages/Home';
 import SearchPage from './Pages/Search';
-import Details from './Pages/Details';
+// import Details from './Pages/Details';
+import PropertyDetails from './Pages/PropertyDetails';
 
 
 
@@ -31,7 +32,7 @@ function AppWrapper() {
         <Routes>
           <Route index element={<Home />} />
           <Route path='/search' element={<SearchPage />} />
-          {/* <Route path='/Details' element={<Details />} /> */}
+          <Route path='/PropertyDetails' element={<PropertyDetails />} />
         </Routes>
       )}
     </>
