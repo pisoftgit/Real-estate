@@ -8,6 +8,8 @@ import Home from './Pages/Home';
 import SearchPage from './Pages/Search';
 // import Details from './Pages/Details';
 import PropertyDetails from './Pages/PropertyDetails';
+import AgentProfile from './Components/agents';
+import AgentsPage from './Pages/AllAgents';
 
 
 
@@ -32,7 +34,9 @@ function AppWrapper() {
         <Routes>
           <Route index element={<Home />} />
           <Route path='/search' element={<SearchPage />} />
+          <Route path='/allAgents' element={<AgentsPage />} />
           <Route path='/PropertyDetails' element={<PropertyDetails />} />
+          <Route path='/agents' element={<AgentProfile />} />
         </Routes>
       )}
     </>

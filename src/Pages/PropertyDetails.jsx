@@ -57,9 +57,17 @@ const relatedProjects = [
     },
 ];
 
+const galleryImages = [
+    { id: 1, url: "/hero_bg_4.jpg", alt: "Property Exterior View" },
+    { id: 2, url: "/hero_bg_1.jpg", alt: "Living Room" },
+    { id: 3, url: "/hero_bg_1.jpg", alt: "Bedroom" },
+    { id: 4, url: "/hero_bg_3.jpg", alt: "Kitchen" },
+    { id: 5, url: "/hero_bg_2.jpg", alt: "Bathroom" },
+];
 const PropertyOverview = () => {
     const sections = {
         about: "About Property",
+        gallery: "Photo Gallery",
         amenities: "Amenities",
         locality: "Locality Details",
         builder: "Builder Info",
@@ -106,7 +114,6 @@ const PropertyOverview = () => {
             });
         }
     };
-
 
     return (
         <>
@@ -188,6 +195,35 @@ const PropertyOverview = () => {
                                             <SpecItem label="Facing" value="South-West" />
                                             <SpecItem label="Parking" value="1 Open" />
                                             <SpecItem label="Lifts" value="3" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ref={(el) => (sectionRefs.current.gallery = el)} id="gallery" >
+                                    <SectionHeader title="Photo Gallery" subtitle="See what makes this property special." />
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-4">
+                                        <div className="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer">
+                                            <img src={galleryImages[0].url} alt={galleryImages[0].alt} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="w-full h-40 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer">
+                                            <img src={galleryImages[1].url} alt={galleryImages[1].alt} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div className="w-full h-40 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer">
+                                            <img src={galleryImages[2].url} alt={galleryImages[2].alt} className="w-full h-full object-cover" />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-2">
+                                        {galleryImages.slice(3, 9).map((image) => (
+                                            <div key={image.id} className="w-full h-40 overflow-hidden rounded-xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer">
+                                                <img src={image.url} alt={image.alt} className="w-full h-full object-cover" />
+                                            </div>
+                                        ))}
+                                        {/* Last cell with "More images" tag */}
+                                        <div className="w-full h-40 flex items-center justify-center bg-gray-100 rounded-xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer group">
+                                            <div className="flex flex-col items-center">
+                                                <FaArrowRight className="text-3xl text-gray-400 mb-1 transition-all duration-300 group-hover:text-blue-500" />
+                                                <p className="text-md font-semibold text-gray-600 group-hover:text-blue-500">More Images</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -282,7 +318,7 @@ const PropertyOverview = () => {
                 </section>
             </main>
             <section>
-                   <PropertiesbyCity />             
+                <PropertiesbyCity />
             </section>
 
             <section>

@@ -17,6 +17,7 @@ import {
 
 const PRIMARY_COLOR = '#426ff5';
 const BADGE_COLOR = '#FFD700';
+const HOVER_BG_COLOR = 'rgba(255, 255, 255, 0.15)'; // A subtle white overlay for hover effects
 
 const dropdownItems = [
     { name: 'Buy', icon: FaShoppingCart, subItems: ['Residential Property', 'Commercial Spaces', 'New Launch Projects'] },
@@ -28,7 +29,7 @@ const dropdownItems = [
 ];
 
 const utilityItems = [
-    { name: 'MB Prime', icon: FaStar, color: 'text-yellow-400' },
+    { name: 'HL Prime', icon: FaStar, color: 'text-yellow-400' },
     { name: 'Login / Sign Up', icon: FaUser, color: 'text-gray-700' },
     { name: 'Call Us: 9874562145', icon: FaPhoneAlt, color: 'text-gray-700' },
 ];
@@ -64,11 +65,11 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                     exit="closed"
                     variants={mobileVariants}
                     transition={{ type: 'spring', stiffness: 400, damping: 40 }}
-                    className="fixed inset-0 w-full h-full bg-white/5 backdrop-blur-xs z-[100] md:hidden"
+                    className="fixed inset-0 w-full h-full bg-white/5 backdrop-blur-sm z-[100] md:hidden"
                     onClick={onClose}
                 >
                     <motion.div
-                        className="absolute bottom-0 w-full bg-white shadow-2xl rounded-t-2xl max-h-[93vh] overflow-y-auto p-6"
+                        className="absolute bottom-0 w-full bg-white shadow-2xl rounded-t-3xl max-h-[93vh] overflow-y-auto p-6"
                         onClick={(e) => e.stopPropagation()}
                         initial={{ y: '100%' }}
                         animate={{ y: '0%' }}
@@ -76,39 +77,39 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                         transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                     >
                         {/* Header */}
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-It font-bold" style={{ color: primaryColor }}>
+                        <div className="flex justify-between items-center mb-4 pb-4 border-b">
+                            <h2 className="text-xl font-extrabold font-It tracking-tight" style={{ color: primaryColor }}>
                                 <a href='/'>HOMELAND</a>
                             </h2>
 
-                            <button onClick={onClose} className="text-2xl text-gray-800 p-2">
+                            <button onClick={onClose} className="text-2xl text-gray-800 p-2 rounded-full hover:bg-gray-100 transition-colors">
                                 <FaTimes />
                             </button>
                         </div>
 
                         {/* Utility Links */}
-                        <div className="flex flex-col space-y-2">
-                            <h3 className="text-xs font-semibold font-ns uppercase text-gray-500 pt-2 border-t mt-5">
+                        <div className="flex flex-col space-y-2 mt-4">
+                            <h3 className="text-xs font-semibold font-ns uppercase text-gray-500">
                                 Account & Support
                             </h3>
                             {utilityItems.map((item, index) => (
                                 <a
                                     key={`util-${index}`}
                                     href="#"
-                                    className="py-2 px-3 flex items-center space-x-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                                    className="py-3 px-4 flex items-center space-x-4 rounded-xl text-gray-700 hover:bg-gray-100 transition-colors"
                                     onClick={onClose}
                                 >
-                                    <item.icon className={`text-lg ${item.color}`} />
+                                    <item.icon className={`text-xl ${item.color}`} />
                                     <span className="font-semibold font-ns">{item.name}</span>
                                 </a>
                             ))}
                         </div>
 
                         {/* Main Menu */}
-                        <h3 className="text-xs font-semibold font-ns uppercase text-gray-500 pt-4 border-t mt-4">
+                        <h3 className="text-xs font-semibold font-ns uppercase text-gray-500 pt-6 border-t mt-6">
                             Property Services
                         </h3>
-                        <div className="flex flex-col divide-y">
+                        <div className="flex flex-col divide-y divide-gray-200">
                             {items.map((item, index) => {
                                 const isExpanded = expandedItem === item.name;
                                 const Icon = item.icon;
@@ -118,14 +119,14 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                                         {/* Parent Item */}
                                         <button
                                             onClick={() => toggleItem(item.name)}
-                                            className="w-full flex justify-between items-center px-3 py-2 text-left rounded-md hover:bg-sky-50 transition-colors"
+                                            className="w-full flex justify-between items-center px-4 py-3 text-left rounded-xl hover:bg-sky-50 transition-colors"
                                         >
-                                            <span className="font-bold font-ns text-gray-800 flex items-center space-x-2">
-                                                <Icon className="text-base" style={{ color: primaryColor }} />
+                                            <span className="font-bold font-ns text-gray-800 flex items-center space-x-3">
+                                                <Icon className="text-lg" style={{ color: primaryColor }} />
                                                 <span>{item.name}</span>
                                             </span>
                                             <FaChevronDown
-                                                className={`text-xs transform transition-transform ${isExpanded ? 'rotate-180' : 'rotate-90'} text-gray-500`}
+                                                className={`text-xs transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'} text-gray-500`}
                                             />
                                         </button>
 
@@ -137,14 +138,14 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                                                     animate={{ height: 'auto', opacity: 1 }}
                                                     exit={{ height: 0, opacity: 0 }}
                                                     transition={{ duration: 0.3 }}
-                                                    className="pl-8 mt-1 flex flex-col space-y-1 overflow-hidden"
+                                                    className="pl-12 mt-1 flex flex-col space-y-1 overflow-hidden"
                                                 >
                                                     {item.subItems.map((subItem, idx) => (
                                                         <a
                                                             key={idx}
                                                             href="#"
                                                             onClick={onClose}
-                                                            className="text-gray-600 text-sm py-1 hover:text-blue-700"
+                                                            className="text-gray-600 text-sm py-2 hover:text-blue-700 transition-colors"
                                                         >
                                                             {subItem}
                                                         </a>
@@ -165,7 +166,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
 
 export default function Navbar() {
     const [hoveredDropdown, setHoveredDropdown] = useState(null);
-    const [currentCity, setCurrentCity] = useState('Bangalore');
+    const [currentCity, setCurrentCity] = useState('Mumbai');
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const cities = ['Bangalore', 'Delhi', 'Mumbai', 'Chennai', 'Pune', 'Hyderabad'];
@@ -182,8 +183,8 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="shadow-md shadow-[#426ff542] font-ns text-sm z-20 fixed top-0 w-full">
-            <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white py-3">
+        <nav className="shadow-lg shadow-[#426ff542] font-ns text-sm z-50 fixed top-0 w-full">
+            <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white py-4">
                 <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
                     <div className="flex items-center space-x-4 md:space-x-10">
                         <div className='flex flex-row justify-between items-center space-x-2'>
@@ -191,13 +192,13 @@ export default function Navbar() {
 
                         </div>
                         <div
-                            className="relative cursor-pointer items-center space-x-1 hidden md:flex"
+                            className="relative cursor-pointer items-center space-x-1 hidden md:flex rounded-full px-3 py-1 hover:bg-white/20 transition-all duration-300"
                             onMouseEnter={() => setHoveredDropdown('Location')}
                             onMouseLeave={() => setHoveredDropdown(null)}
                         >
                             <FaMapMarkerAlt className="text-base" />
                             <span>{currentCity}</span>
-                            <FaChevronDown className="text-[10px] opacity-70" />
+                            <FaChevronDown className="text-[10px] opacity-70 transition-transform duration-300" />
 
                             <AnimatePresence>
                                 {hoveredDropdown === 'Location' && (
@@ -206,14 +207,14 @@ export default function Navbar() {
                                         initial="initial"
                                         animate="animate"
                                         exit="exit"
-                                        className="absolute top-full left-0 mt-3 w-48 bg-white text-gray-800 shadow-xl rounded border border-gray-300 z-50 overflow-hidden"
+                                        className="absolute top-full left-0 mt-3 w-48 bg-white text-gray-800 shadow-xl rounded-lg border border-gray-200 z-50 overflow-hidden"
                                     >
                                         <div style={{ backgroundColor: PRIMARY_COLOR }} className="text-white px-4 py-2 text-xs font-bold">Select City</div>
                                         {cities.map((city) => (
                                             <div
                                                 key={city}
                                                 onClick={() => handleCityChange(city)}
-                                                className={`px-4 py-2 hover:bg-gray-100 flex justify-between items-center cursor-pointer ${currentCity === city ? 'bg-blue-50 font-bold' : ''}`}
+                                                className={`px-4 py-2 hover:bg-blue-50 flex justify-between items-center cursor-pointer transition-colors ${currentCity === city ? 'bg-blue-100 font-bold text-blue-800' : ''}`}
                                             >
                                                 {city}
                                                 {currentCity === city && <FaCheck className="text-xs" style={{ color: PRIMARY_COLOR }} />}
@@ -227,29 +228,29 @@ export default function Navbar() {
 
                     <div className="flex items-center space-x-4 md:space-x-6 text-white font-medium">
                         <div className="hidden md:flex items-center space-x-6">
-                            <a href="#" className="flex items-center space-x-1 hover:opacity-80 transition-opacity">
-                                <FaStar className="text-yellow-400" />
+                            <a href="#" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
+                                <FaStar className="text-yellow-300" />
                                 <span>HL Prime</span>
                             </a>
-                            <a href="#" className="flex items-center space-x-1 hover:opacity-80 transition-opacity">
+                            <a href="#" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaUser />
                                 <span>Login</span>
                             </a>
                         </div>
 
-                        <button className="bg-white hidden text-black font-bold rounded-full px-3 py-1 md:px-4 md:py-1.5 md:flex items-center space-x-2 shadow hover:opacity-90">
+                        <button className="bg-white hidden text-black font-bold rounded-full px-4 py-2 md:flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                             <span style={{ color: PRIMARY_COLOR }}>Post Property</span>
-                            <span style={{ backgroundColor: BADGE_COLOR }} className="text-xs font-bold text-gray-900 px-1 rounded-sm">FREE</span>
+                            <span style={{ backgroundColor: BADGE_COLOR }} className="text-xs font-bold text-gray-900 px-1.5 py-0.5 rounded-full">FREE</span>
                         </button>
 
-                        <button onClick={() => setMobileMenuOpen(true)} className="md:hidden text-xl">
+                        <button onClick={() => setMobileMenuOpen(true)} className="md:hidden text-xl p-2 rounded-full hover:bg-white/20 transition-colors">
                             <FaBars />
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div className="bg-white shadow text-gray-800 py-3 hidden md:block">
+            <div className="bg-white shadow-sm text-gray-800 py-3 hidden md:block">
                 <div className="container mx-auto px-4 md:px-8">
                     <div className="flex justify-center items-center space-x-1 font-semibold">
                         {dropdownItems.map((item) => {
@@ -262,13 +263,13 @@ export default function Navbar() {
                                     onMouseLeave={() => setHoveredDropdown(null)}
                                 >
                                     <div
-                                        className={`flex items-center space-x-1 px-4 py-2 cursor-pointer rounded-md transition-all duration-200 ${isActive ? 'text-white shadow-md' : 'hover:shadow-sm hover:text-gray-900'}`}
+                                        className={`flex items-center space-x-1 px-4 py-2 cursor-pointer rounded-full transition-all duration-200 ${isActive ? 'text-white shadow-md' : 'hover:bg-blue-50 hover:text-blue-800'}`}
                                         style={{
                                             backgroundColor: isActive ? PRIMARY_COLOR : 'transparent',
                                         }}
                                     >
                                         <span>{item.name}</span>
-                                        <FaChevronDown className={`text-[10px] ${isActive ? 'text-white' : 'text-gray-400'}`} />
+                                        <FaChevronDown className={`text-[10px] transform transition-transform duration-200 ${isActive ? 'text-white rotate-180' : 'text-gray-400'}`} />
                                     </div>
 
                                     {/* Dropdown */}
@@ -279,7 +280,7 @@ export default function Navbar() {
                                                 initial="initial"
                                                 animate="animate"
                                                 exit="exit"
-                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white border border-gray-100 shadow-lg rounded w-56 z-50 overflow-hidden"
+                                                className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white border border-gray-100 shadow-xl rounded-lg w-56 z-50 overflow-hidden"
                                             >
                                                 {item.subItems.map((sub, idx) => {
                                                     const SubIcon = item.icon;
@@ -287,7 +288,7 @@ export default function Navbar() {
                                                         <a
                                                             key={idx}
                                                             href="#"
-                                                            className="px-4 py-2 text-gray-700 flex items-center space-x-2 hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                                                            className="px-4 py-2.5 text-gray-700 flex items-center space-x-2 hover:bg-blue-50 hover:text-blue-700 transition-colors"
                                                         >
                                                             <SubIcon className="text-sm" style={{ color: PRIMARY_COLOR }} />
                                                             <span>{sub}</span>

@@ -19,6 +19,8 @@ import Properties from '../Components/Properties'
 import Footer from '../Components/Footer'
 import { useNavigate } from 'react-router-dom'
 import PopularProperties from '../Components/Explore'
+import AgentProfile from '../Components/agents'
+import FeaturedAgents from '../Components/FeaturedAgents'
 
 
 const citiesList = ['Mumbai', 'Delhi', 'Chennai', 'Pune', 'Hyderabad']
@@ -45,7 +47,7 @@ const dropdownVariants = {
 const FilterDropdown = ({ label, icon: Icon, options }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selected, setSelected] = useState(options[0])
-  
+
     return (
         <div
             className="relative w-full md:w-auto"
@@ -91,9 +93,9 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
 export default function Home() {
     const prevRef = useRef(null)
     const nextRef = useRef(null)
-    const navigate= useNavigate()
+    const navigate = useNavigate()
 
-    const HandleSearch = () =>{
+    const HandleSearch = () => {
         navigate("/search")
     }
 
@@ -113,7 +115,7 @@ export default function Home() {
                         >
                             Find Your Dream Home with <span className="text-[#cae1ff] font-It">HomeLand</span>
                         </motion.h1>
-                        
+
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -185,13 +187,19 @@ export default function Home() {
 
             {/* Properties */}
             <section>
-                    <Properties />
+                <Properties />
             </section>
 
+            {/* agents */}
+            <section>
+                <FeaturedAgents />
+            </section>
+
+            {/* Popular Properties */}
             <section>
                 <PopularProperties />
             </section>
-            
+
             <section>
                 <Footer />
             </section>
