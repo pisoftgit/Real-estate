@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Navbar from "../Components/Navbar";
 import "../App.css"
 import Footer from "../Components/Footer";
-import PopularProperties from "../Components/Explore";
+import PropertiesbyCity from "../Components/PropertiesbyCity";
 
 const DARK_COLOR = "#1F2937";
 const TEXT_COLOR = "#4B5563";
@@ -234,7 +234,7 @@ const PropertyOverview = () => {
                                     </div>
                                     <div className="mt-8 h-96 w-full rounded-2xl overflow-hidden shadow-xl">
                                         <iframe
-                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15082.723381650367!2d72.8647038!3d19.11796695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7189a87d60f%3A0x6b4c106093510522!2sGoregaon%20East%2C%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1699999999999!5m2!1sen!2sin"
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15074.791356698901!2d72.84372389175098!3d19.16469941173139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b748b6f7584d%3A0x4137c9279cba62d8!2sAspen%20Park!5e0!3m2!1sen!2sin!4v1759217991901!5m2!1sen!2sin"
                                             width="100%"
                                             height="100%"
                                             style={{ border: 0 }}
@@ -260,7 +260,7 @@ const PropertyOverview = () => {
                         </div>
 
                         <div className="lg:col-span-1 hidden lg:block">
-                            <div className="sticky top-30 mt-15 space-y-4 p-6 rounded-3xl" style={{ backgroundColor: '#fff', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                            <div className="sticky top-30 mt-15 space-y-4 p-6 rounded-3xl bg-white shadow-blue-300 border-blue-50 shadow-lg">
                                 <h3 className="text-xl font-bold font-ns" style={{ color: DARK_COLOR }}>Quick Navigation</h3>
                                 {Object.entries(sections).map(([key, value]) => (
                                     <button
@@ -268,7 +268,7 @@ const PropertyOverview = () => {
                                         onClick={() => handleScrollToSection(key)}
                                         className={`w-full flex items-center justify-between p-3 rounded-lg text-left font-ns font-medium transition-all duration-300 ${activeSection === key
                                             ? `text-white shadow-md transform scale-[1.02]`
-                                            : "text-gray-700 hover:bg-gray-100"
+                                            : "text-gray-700 hover:bg-blue-100 bg-gray-100"
                                             }`}
                                         style={activeSection === key ? { backgroundColor: ACCENT_COLOR } : {}}
                                     >
@@ -282,7 +282,7 @@ const PropertyOverview = () => {
                 </section>
             </main>
             <section>
-                   <PopularProperties />             
+                   <PropertiesbyCity />             
             </section>
 
             <section>
@@ -294,7 +294,7 @@ const PropertyOverview = () => {
 
 const SectionHeader = ({ title, subtitle }) => (
     <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl font-ns font-bold" style={{ color: DARK_COLOR }}>{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-ns font-bold inline-block bg-[#426ff5] text-white rounded-4xl py-1 px-5">{title}</h2>
         <p className="text-lg mt- font-ns" style={{ color: TEXT_COLOR }}>{subtitle}</p>
     </div>
 );

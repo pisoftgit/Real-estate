@@ -86,7 +86,7 @@ export default function Properties() {
 
   return (
     <section className="container mx-auto px-4 md:px-8 py-8 relative">
-      <h2 className="text-md inline-block rounded-3xl md:text-xl px-4 py-1 bg-[#426ff5] text-white font-bold mb-6 font-ns">
+      <h2 className="text-md inline-block text-ns rounded-3xl md:text-xl px-4 py-1 bg-[#426ff5] text-white font-bold mb-6 font-ns">
         Featured Properties
       </h2>
 
