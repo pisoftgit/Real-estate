@@ -89,7 +89,7 @@ export default function Footer() {
           <div className="flex space-x-4 mb-6">
             <motion.a
               href="#"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05 }}    
               className="block"
               aria-label="Google Play Store"
             >
