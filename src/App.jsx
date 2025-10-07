@@ -10,6 +10,7 @@ import SearchPage from './Pages/Search';
 import PropertyDetails from './Pages/PropertyDetails';
 import AgentProfile from './Components/agents';
 import AgentsPage from './Pages/AllAgents';
+import UserLogin from './Components/account/UserLogin';
 
 
 
@@ -37,6 +38,7 @@ function AppWrapper() {
           <Route path='/allAgents' element={<AgentsPage />} />
           <Route path='/PropertyDetails' element={<PropertyDetails />} />
           <Route path='/agents' element={<AgentProfile />} />
+          <Route path='/userLogin' element={<UserLogin />} />
         </Routes>
       )}
     </>
