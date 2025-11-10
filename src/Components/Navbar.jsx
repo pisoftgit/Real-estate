@@ -66,7 +66,6 @@ const dropdownItems = [
 
 const utilityItems = [
     { name: 'Home', icon: FaHome, color: 'text-blue-400', path: '/' },
-    { name: 'HL Prime', icon: FaStar, color: 'text-yellow-400', path: '/prime' },
     { name: 'Login / Sign Up', icon: FaUser, color: 'text-gray-700', path: '/userLogin' },
     { name: 'Call Us: 9874562145', icon: FaPhoneAlt, color: 'text-gray-700', path: '#' },
 ];
@@ -289,10 +288,6 @@ export default function Navbar() {
                             <a href="/" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaHome className="text-white" />
                                 <span>Home</span>
-                            </a>
-                            <a href="/prime" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
-                                <FaStar className="text-yellow-300" />
-                                <span>HL Prime</span>
                             </a>
                             <a href="/userLogin" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaUser />

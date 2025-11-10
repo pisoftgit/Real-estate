@@ -10,11 +10,9 @@ import SearchPage from './Pages/Search';
 import PropertyDetails from './Pages/PropertyDetails';
 import AgentProfile from './Components/agents';
 import AgentsPage from './Pages/AllAgents';
-import UserLogin from './Components/account/UserLogin';
+import UserLogin from './Components/account/Login/UserLogin';
+import UserRegister from './Components/account/Register/Register';
 
-
-
-// Pages Wrapper includes all routes
 
 function AppWrapper() {
   const location = useLocation();
@@ -39,6 +37,7 @@ function AppWrapper() {
           <Route path='/PropertyDetails' element={<PropertyDetails />} />
           <Route path='/agents' element={<AgentProfile />} />
           <Route path='/userLogin' element={<UserLogin />} />
+          <Route path='/UserRegister' element={<UserRegister />} />
         </Routes>
       )}
     </>
