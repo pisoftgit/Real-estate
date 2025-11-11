@@ -3,8 +3,14 @@ import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { TiSocialFacebook } from "react-icons/ti";
 import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
+
+  const navigate = useNavigate()
+  const HandleSignUp = () =>{
+    navigate('/UserRegister')
+  }
   return (
     <div className="max-h-screen min-h-screen flex flex-col md:flex-row bg-white font-sans">
       <motion.div
@@ -136,7 +142,7 @@ function UserLogin() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{" "}
-            <a href="/UserRegister" className="text-blue-600 hover:text-blue-700 font-semibold">
+            <a onClick={HandleSignUp} className="text-blue-600 hover:text-blue-700 font-semibold">
               Sign Up Now
             </a>
           </p>

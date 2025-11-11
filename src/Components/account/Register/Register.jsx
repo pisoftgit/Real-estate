@@ -4,9 +4,14 @@ import { FcGoogle } from "react-icons/fc";
 import { TiSocialFacebook } from "react-icons/ti";
 import UserRegisterForm from "./UserRegister";
 import RealtorRegisterForm from "./AgentRegister";
+import { useNavigate } from "react-router-dom";
 
 function UserRegister() {
     const [activeTab, setActiveTab] = useState("User");
+    const navigate = useNavigate()
+    const HandleSignIn = () => {
+        navigate('/userLogin')
+    }
 
     const tabClass = (tabName) =>
         `flex-1 py-3 text-center text-sm font-semibold cursor-pointer relative transition-colors duration-300 
@@ -132,7 +137,7 @@ function UserRegister() {
                     <p className="text-center text-sm text-gray-500 mt-6">
                         Already have an account?{" "}
                         <a
-                            href="/login"
+                            onClick={HandleSignIn}
                             className="text-blue-600 hover:text-blue-700 font-semibold"
                         >
                             Sign in
