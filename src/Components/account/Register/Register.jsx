@@ -259,15 +259,15 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent flex flex-col justify-end p-12 text-white">
                     <motion.h1
                         initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: -100, opacity: 1 }}
+                        animate={{ y: -150, opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.5 }}
-                        className="text-5xl font-extrabold mb-4"
+                        className="text-5xl font-bold mb-4"
                     >
                         REAL ESTATE
                     </motion.h1>
                     <motion.p
                         initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: -100, opacity: 1 }}
+                        animate={{ y: -150, opacity: 1 }}
                         transition={{ delay: 0.5, duration: 0.7 }}
                         className="text-xl font-light max-w-lg"
                     >
