@@ -1,146 +1,470 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { TiSocialFacebook } from "react-icons/ti";
-import UserRegisterForm from "./UserRegister";
-import RealtorRegisterForm from "./AgentRegister";
+import {
+    FaUser,
+    FaBuilding,
+    FaEnvelope,
+    FaLock,
+    FaPhoneAlt,
+    FaExclamationCircle,
+    FaCheckCircle,
+    FaEye,
+    FaEyeSlash,
+} from "react-icons/fa";
+import { HiOutlineBriefcase } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
-function UserRegister() {
-    const [activeTab, setActiveTab] = useState("User");
-    const navigate = useNavigate()
-    const HandleSignIn = () => {
-        navigate('/userLogin')
-    }
+// ---------------- Password Validation Helper ----------------
+const validatePassword = (pwd) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(pwd);
+    const hasLowerCase = /[a-z]/.test(pwd);
+    const hasNumber = /[0-9]/.test(pwd);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
 
-    const tabClass = (tabName) =>
-        `flex-1 py-3 text-center text-sm font-semibold cursor-pointer relative transition-colors duration-300 
-    ${activeTab === tabName ? "text-gray-900" : "text-gray-500 hover:text-gray-700"}`;
+    return {
+        minLength: pwd.length >= minLength,
+        hasUpperCase,
+        hasLowerCase,
+        hasNumber,
+        hasSpecialChar,
+        isValid:
+            pwd.length >= minLength &&
+            hasUpperCase &&
+            hasLowerCase &&
+            hasNumber &&
+            hasSpecialChar,
+    };
+};
+
+// ---------------- Input Field Component ----------------
+const InputField = ({
+    id,
+    name,
+    type,
+    placeholder,
+    icon,
+    value,
+    onChange,
+    error,
+    toggleVisibility, 
+}) => (
+    <div className="space-y-1">
+        <div className="relative">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                {icon}
+            </span>
+
+            <input
+                id={id}
+                name={name}
+                type={type}
+                value={value}
+                onChange={onChange}
+                required
+                placeholder={placeholder}
+                className={`w-full pl-10 pr-10 py-3 border rounded-2xl focus:ring-4 transition duration-150 text-sm placeholder-gray-500 ${error
+                        ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+                        : "border-gray-300 focus:border-blue-500 focus:ring-blue-100"
+                    }`}
+            />
+
+            {toggleVisibility && (
+                <button
+                    type="button"
+                    onClick={toggleVisibility.onClick}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+                >
+                    {toggleVisibility.visible ? (
+                        <FaEyeSlash size={16} />
+                    ) : (
+                        <FaEye size={16} />
+                    )}
+                </button>
+            )}
+        </div>
+
+        {error && (
+            <p className="flex items-center text-xs text-red-500 pt-1 ml-1 font-medium">
+                <FaExclamationCircle className="mr-1 h-3 w-3" /> {error}
+            </p>
+        )}
+    </div>
+);
+
+// ---------------- Password Strength Indicator ----------------
+const PasswordStrengthIndicator = ({ password }) => {
+    if (!password) return null;
+    const checks = validatePassword(password);
+    const {
+        minLength,
+        hasUpperCase,
+        hasLowerCase,
+        hasNumber,
+        hasSpecialChar,
+        isValid,
+    } = checks;
+
+    const checkItem = (isMet, label) => (
+        <li
+            key={label}
+            className={`flex items-center text-xs transition duration-200 ${isMet ? "text-green-600" : "text-gray-500"
+                }`}
+        >
+            {isMet ? (
+                <FaCheckCircle className="mr-1 h-3 w-3" />
+            ) : (
+                <FaExclamationCircle className="mr-1 h-3 w-3" />
+            )}
+            {label}
+        </li>
+    );
 
     return (
-        <div className="min-h-screen max-h-full flex flex-col md:flex-row bg-white font-sans">
-            {/* LEFT SIDE IMAGE */}
+        <div
+            className={`p-3 text-sm rounded-lg mt-2 ${isValid ? "bg-green-50" : "bg-yellow-50"
+                } border border-gray-200`}
+        >
+            <p
+                className={`font-semibold mb-1 ${isValid ? "text-green-700" : "text-gray-700"
+                    }`}
+            >
+                Password Strength: {isValid ? "Strong" : "Improvement needed"}
+            </p>
+            <ul className="grid grid-cols-2 gap-y-1 gap-x-4 list-none pl-0">
+                {checkItem(minLength, "Min 8 characters")}
+                {checkItem(hasUpperCase, "Uppercase letter")}
+                {checkItem(hasLowerCase, "Lowercase letter")}
+                {checkItem(hasNumber, "A number")}
+                {checkItem(hasSpecialChar, "Special character")}
+            </ul>
+        </div>
+    );
+};
+
+// ---------------- Notification Banner ----------------
+const NotificationBanner = ({ message, type }) => (
+    <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -50, opacity: 0 }}
+        className={`p-4 rounded-xl shadow-lg mb-4 text-sm font-bold ${type === "success"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+    >
+        <div className="flex items-center">
+            {type === "success" ? (
+                <FaCheckCircle className="mr-2 h-5 w-5" />
+            ) : (
+                <FaExclamationCircle className="mr-2 h-5 w-5" />
+            )}
+            {message}
+        </div>
+    </motion.div>
+);
+
+export default function App() {
+    const [role, setRole] = useState("Buyer");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [selectedBusinessNatures, setSelectedBusinessNatures] = useState([]);
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [submissionStatus, setSubmissionStatus] = useState(null);
+
+    // 👇 Password visibility toggles
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const isRealtor = role === "Realtor";
+    const navigate = useNavigate();
+    const HandleSignIn = () => navigate("/UserLogin");
+
+    const handleBusinessNatureToggle = (nature) => {
+        setSelectedBusinessNatures((prev) =>
+            prev.includes(nature)
+                ? prev.filter((n) => n !== nature)
+                : [...prev, nature]
+        );
+        if (errors.businessNature) {
+            setErrors((prev) => ({ ...prev, businessNature: null }));
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors({});
+        setSubmissionStatus(null);
+
+        const newErrors = {};
+        const passwordCheck = validatePassword(password);
+
+        if (!name.trim())
+            newErrors.name = isRealtor
+                ? "Agency Name is required."
+                : "Full Name is required.";
+        if (!email.trim()) newErrors.email = "Email is required.";
+        if (!phone.trim()) newErrors.phone = "Phone number is required.";
+        if (password !== confirmPassword)
+            newErrors.confirmPassword = "Passwords do not match.";
+        if (!passwordCheck.isValid)
+            newErrors.password = "Password is not strong enough.";
+        if (isRealtor && selectedBusinessNatures.length === 0)
+            newErrors.businessNature =
+                "Please select at least one business nature.";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setIsLoading(true);
+
+        // Simulate API call
+        setTimeout(() => {
+            setIsLoading(false);
+            setSubmissionStatus("success");
+            setName("");
+            setEmail("");
+            setPhone("");
+            setPassword("");
+            setConfirmPassword("");
+            setSelectedBusinessNatures([]);
+        }, 1500);
+    };
+
+    return (
+        <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 font-sans">
+            {/* LEFT IMAGE SIDE */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8 }}
-                className="hidden md:flex md:w-1/2 lg:w-4/7 relative overflow-hidden"
+                className="hidden md:flex md:w-1/2 lg:w-3/5 relative overflow-hidden"
             >
                 <img
                     src="https://pimwp.s3-accelerate.amazonaws.com/2022/01/6-emerging-trends-in-residential-real-estate-in-the-post-COVID-19-era-FB-1200x700-compressed.jpg"
                     alt="Modern House Interior"
                     className="w-full h-full object-cover"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent text-white p-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: -150 }}
-                        transition={{ delay: 0.2, duration: 0.6 }}
-                        className="max-w-lg"
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent flex flex-col justify-end p-12 text-white">
+                    <motion.h1
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: -100, opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.5 }}
+                        className="text-5xl font-extrabold mb-4"
                     >
-                        <h1 className="text-5xl font-extrabold mb-4">REAL ESTATE</h1>
-                        <p className="text-xl font-light">
-                            Your trusted platform for property management and rental discovery.
-                        </p>
-                    </motion.div>
+                        REAL ESTATE
+                    </motion.h1>
+                    <motion.p
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: -100, opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 0.7 }}
+                        className="text-xl font-light max-w-lg"
+                    >
+                        Your trusted platform for property management and rental discovery.
+                    </motion.p>
                 </div>
-
-
             </motion.div>
-
-            {/* RIGHT SIDE - Register Form */}
+            {/* RIGHT FORM SIDE */}
             <motion.div
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8 }}
-                className="w-full md:w-1/2 lg:w-3/7 flex flex-col justify-center p-8 sm:p-12 bg-white"
+                className="w-full md:w-1/2 flex flex-col justify-center items-center p-8 sm:p-12 lg:p-16 bg-white shadow-2xl overflow-y-auto"
             >
-                <div className="max-w-md w-full mx-auto">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                <div className="w-full max-w-md">
+                    <h2 className="text-4xl font-bold text-gray-900 mb-2">
                         Create Your Account
                     </h2>
                     <p className="text-gray-500 mb-8">
-                        Register to manage your listings or find your next home.
+                        Sign up as a <strong>{role}</strong> to access the platform.
                     </p>
 
-                    {/* Tab Selection */}
-                    <div className="flex bg-sky-100 rounded-lg p-1 mb-8 shadow-inner">
-                        <div
-                            className={tabClass("User")}
-                            onClick={() => setActiveTab("User")}
+                    {submissionStatus && (
+                        <NotificationBanner
+                            message={
+                                submissionStatus === "success"
+                                    ? "Registration successful! You can now log in."
+                                    : "An error occurred during registration."
+                            }
+                            type={submissionStatus}
+                        />
+                    )}
+
+                    {/* Role toggle */}
+                    <div className="flex w-full rounded-full bg-gray-200 p-1 mb-6 shadow-inner transition-all duration-300">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setRole("Buyer");
+                                setSelectedBusinessNatures([]);
+                                setErrors({});
+                            }}
+                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "Buyer"
+                                    ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
+                                    : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
+                                }`}
                         >
-                            User
-                            {activeTab === "User" && (
-                                <motion.div
-                                    layoutId="tab-underline"
-                                    className="absolute bottom-0 left-0 right-0 h-1 bg-blue-500 rounded-full"
-                                />
-                            )}
-                        </div>
-                        <div
-                            className={tabClass("Realtor")}
-                            onClick={() => setActiveTab("Realtor")}
+                            <FaUser className="inline-block mr-2" /> Buyer
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setRole("Realtor");
+                                setSelectedBusinessNatures([]);
+                                setErrors({});
+                            }}
+                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "Realtor"
+                                    ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
+                                    : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
+                                }`}
                         >
-                            Realtor/Agent
-                            {activeTab === "Realtor" && (
-                                <motion.div
-                                    layoutId="tab-underline"
-                                    className="absolute bottom-0 left-0 right-0 h-1 bg-blue-500 rounded-full"
-                                />
-                            )}
-                        </div>
+                            <FaBuilding className="inline-block mr-2" /> Realtor/Agent
+                        </button>
                     </div>
 
-                    {/* Dynamic Form */}
-                    <form onSubmit={(e) => e.preventDefault()}>
-                        <AnimatePresence mode="wait">
-                            {activeTab === "User" ? (
-                                <UserRegisterForm />
-                            ) : (
-                                <RealtorRegisterForm />
-                            )}
-                        </AnimatePresence>
+                    {/* Form */}
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <InputField
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder={isRealtor ? "Agency Name" : "Your Full Name"}
+                            icon={isRealtor ? <FaBuilding /> : <FaUser />}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            error={errors.name}
+                        />
+
+                        {isRealtor && (
+                            <div className="pt-2">
+                                <label className="text-sm font-bold text-gray-700 flex items-center mb-3">
+                                    <HiOutlineBriefcase className="mr-2 text-blue-600" /> Select
+                                    your primary business nature(s):
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {["Builder", "Channel Partner", "Dealer"].map((nature) => (
+                                        <button
+                                            key={nature}
+                                            type="button"
+                                            onClick={() => handleBusinessNatureToggle(nature)}
+                                            className={`py-2 px-4 text-sm font-medium rounded-full transition duration-150 border ${selectedBusinessNatures.includes(nature)
+                                                    ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                                                    : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                                                }`}
+                                        >
+                                            {nature}
+                                        </button>
+                                    ))}
+                                </div>
+                                {errors.businessNature && (
+                                    <p className="flex items-center text-xs text-red-500 pt-1 ml-1 font-medium mt-2">
+                                        <FaExclamationCircle className="mr-1 h-3 w-3" />{" "}
+                                        {errors.businessNature}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        <InputField
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Email address"
+                            icon={<FaEnvelope />}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            error={errors.email}
+                        />
+                        <InputField
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="Phone Number"
+                            icon={<FaPhoneAlt size={14} />}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            error={errors.phone}
+                        />
+
+                        {/* Password Field */}
+                        <InputField
+                            id="password"
+                            name="new-password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Password"
+                            icon={<FaLock size={14} />}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            error={errors.password}
+                            toggleVisibility={{
+                                visible: showPassword,
+                                onClick: () => setShowPassword(!showPassword),
+                            }}
+                        />
+
+                        <PasswordStrengthIndicator password={password} />
+
+                        {/* Confirm Password Field */}
+                        <InputField
+                            id="confirmPassword"
+                            name="confirm-password"
+                            type={showConfirmPassword ? "text" : "password"}
+                            placeholder="Confirm Password"
+                            icon={<FaLock size={14} />}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            error={errors.confirmPassword}
+                            toggleVisibility={{
+                                visible: showConfirmPassword,
+                                onClick: () =>
+                                    setShowConfirmPassword(!showConfirmPassword),
+                            }}
+                        />
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full flex justify-center py-3 px-4 rounded-xl shadow-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-150 mt-6 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                        >
+                            {isLoading ? "Loading..." : "Register and Create Account"}
+                        </button>
                     </form>
 
-                    {/* Divider */}
+                    {/* Social Buttons */}
                     <div className="relative flex items-center justify-center py-6">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-gray-300"></div>
+                            <div className="w-full border-t border-gray-200"></div>
                         </div>
                         <div className="relative bg-white px-4 text-sm text-gray-500">
-                            Or continue with
+                            Or sign up with social
                         </div>
                     </div>
 
-                    {/* Social Buttons */}
                     <div className="flex justify-center gap-4">
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition duration-150"
-                        >
-                            <FcGoogle size={19} className="mx-2" />
-                            Google
-                        </motion.button>
-
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 transition duration-150"
-                        >
-                            <TiSocialFacebook size={23} className="text-blue-600 mx-2" />
+                        <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium hover:bg-gray-50 transition duration-150">
+                            <FcGoogle size={19} className="mx-2" /> Google
+                        </button>
+                        <button className="flex items-center justify-center w-full py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium hover:bg-gray-50 transition duration-150">
+                            <TiSocialFacebook size={23} className="text-blue-600 mx-2" />{" "}
                             Facebook
-                        </motion.button>
+                        </button>
                     </div>
 
-                    {/* Already Registered */}
                     <p className="text-center text-sm text-gray-500 mt-6">
                         Already have an account?{" "}
                         <a
                             onClick={HandleSignIn}
-                            className="text-blue-600 hover:text-blue-700 font-semibold"
+                            className="text-blue-600 hover:text-blue-700 font-bold cursor-pointer transition duration-150"
                         >
-                            Sign in
+                            Sign in now
                         </a>
                     </p>
                 </div>
@@ -148,5 +472,3 @@ function UserRegister() {
         </div>
     );
 }
-
-export default UserRegister;

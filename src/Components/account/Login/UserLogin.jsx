@@ -142,7 +142,7 @@ function UserLogin() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{" "}
-            <a onClick={HandleSignUp} className="text-blue-600 hover:text-blue-700 font-semibold">
+            <a onClick={HandleSignUp} className="cursor-pointer text-blue-600 hover:text-blue-700 font-semibold">
               Sign Up Now
             </a>
           </p>
