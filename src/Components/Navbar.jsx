@@ -14,6 +14,7 @@ import {
     FaBars,
     FaTimes,
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const PRIMARY_COLOR = '#426ff5';
 const BADGE_COLOR = '#FFD700';
@@ -113,7 +114,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                     >
-                        
+
                         <div className="flex justify-between items-center mb-4 pb-4 border-b">
                             <h2 className="text-xl font-extrabold font-It tracking-tight" style={{ color: primaryColor }}>
                                 <a href='/'>RealEstate</a>
@@ -216,6 +217,7 @@ export default function Navbar() {
     const [hoveredDropdown, setHoveredDropdown] = useState(null);
     const [currentCity, setCurrentCity] = useState('Mumbai');
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     const cities = ['Bangalore', 'Delhi', 'Mumbai', 'Chennai', 'Pune', 'Hyderabad'];
 
@@ -229,6 +231,12 @@ export default function Navbar() {
         setCurrentCity(city);
         setHoveredDropdown(null);
     };
+
+
+    const HandleLoginClick = () => {
+        navigate("/userLogin")
+    }
+
 
     return (
         <nav className="shadow-lg shadow-[#426ff542] font-ns text-sm z-50 fixed top-0 w-full">
@@ -268,9 +276,8 @@ export default function Navbar() {
                                             <div
                                                 key={city}
                                                 onClick={() => handleCityChange(city)}
-                                                className={`px-4 py-2 hover:bg-blue-50 flex justify-between items-center cursor-pointer transition-colors ${
-                                                    currentCity === city ? 'bg-blue-100 font-bold text-blue-800' : ''
-                                                }`}
+                                                className={`px-4 py-2 hover:bg-blue-50 flex justify-between items-center cursor-pointer transition-colors ${currentCity === city ? 'bg-blue-100 font-bold text-blue-800' : ''
+                                                    }`}
                                             >
                                                 {city}
                                                 {currentCity === city && <FaCheck className="text-xs" style={{ color: PRIMARY_COLOR }} />}
@@ -289,10 +296,10 @@ export default function Navbar() {
                                 <FaHome className="text-white" />
                                 <span>Home</span>
                             </a>
-                            <a href="/userLogin" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
+                            <span onClick={HandleLoginClick} className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaUser />
                                 <span>Login</span>
-                            </a>
+                            </span>
                         </div>
 
                         {/* Post Property button */}
@@ -334,18 +341,16 @@ export default function Navbar() {
                                 >
                                     {/* Parent Menu Item */}
                                     <div
-                                        className={`flex items-center space-x-1 px-4 py-2 cursor-pointer rounded-full transition-all duration-200 ${
-                                            isActive ? 'text-white shadow-md' : 'hover:bg-blue-50 hover:text-blue-800'
-                                        }`}
+                                        className={`flex items-center space-x-1 px-4 py-2 cursor-pointer rounded-full transition-all duration-200 ${isActive ? 'text-white shadow-md' : 'hover:bg-blue-50 hover:text-blue-800'
+                                            }`}
                                         style={{
                                             backgroundColor: isActive ? PRIMARY_COLOR : 'transparent',
                                         }}
                                     >
                                         <span>{item.name}</span>
                                         <FaChevronDown
-                                            className={`text-[10px] transform transition-transform duration-200 ${
-                                                isActive ? 'text-white rotate-180' : 'text-gray-400'
-                                            }`}
+                                            className={`text-[10px] transform transition-transform duration-200 ${isActive ? 'text-white rotate-180' : 'text-gray-400'
+                                                }`}
                                         />
                                     </div>
 

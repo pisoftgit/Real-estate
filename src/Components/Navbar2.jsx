@@ -330,6 +330,7 @@ import {
     FaBars,
     FaTimes,
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const PRIMARY_COLOR = '#426ff5';
 const BADGE_COLOR = '#FFD700';
@@ -535,6 +536,7 @@ export default function Navbar() {
     const [hoveredDropdown, setHoveredDropdown] = useState(null);
     const [currentCity, setCurrentCity] = useState('Mumbai');
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
     const cities = ['Bangalore', 'Delhi', 'Mumbai', 'Chennai', 'Pune', 'Hyderabad'];
 
@@ -548,6 +550,10 @@ export default function Navbar() {
         setCurrentCity(city);
         setHoveredDropdown(null);
     };
+
+    const HandleLoginClick = () => {
+        navigate("/userLogin")
+    }
 
     return (
         <nav className="shadow-lg shadow-[#426ff542] font-ns text-sm z-50 fixed top-0 w-full">
@@ -587,9 +593,8 @@ export default function Navbar() {
                                             <div
                                                 key={city}
                                                 onClick={() => handleCityChange(city)}
-                                                className={`px-4 py-2 hover:bg-blue-50 flex justify-between items-center cursor-pointer transition-colors ${
-                                                    currentCity === city ? 'bg-blue-100 font-bold text-blue-800' : ''
-                                                }`}
+                                                className={`px-4 py-2 hover:bg-blue-50 flex justify-between items-center cursor-pointer transition-colors ${currentCity === city ? 'bg-blue-100 font-bold text-blue-800' : ''
+                                                    }`}
                                             >
                                                 {city}
                                                 {currentCity === city && <FaCheck className="text-xs" style={{ color: PRIMARY_COLOR }} />}
@@ -608,7 +613,7 @@ export default function Navbar() {
                                 <FaHome className="text-white" />
                                 <span>Home</span>
                             </a>
-                            <a href="/userLogin" className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
+                            <a onClick={HandleLoginClick} className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaUser />
                                 <span>Login</span>
                             </a>
