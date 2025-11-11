@@ -6,11 +6,29 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
+  const navigate = useNavigate();
+  const [userCode, setUserCode] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
-  const HandleSignUp = () =>{
-    navigate('/UserRegister')
-  }
+  const HandleSignUp = () => {
+    navigate("/UserRegister");
+  };
+
+  const HandleLoginClick = () => {
+    if (userCode.trim() !== "" && password.trim() !== "") {
+      console.log("Login successful, navigating to Home");
+      navigate("/");
+    } else {
+      alert("Please fill in both User Code and Password.");
+      console.log("Login failed: fields are empty.");
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    HandleLoginClick();
+  };
+
   return (
     <div className="max-h-screen min-h-screen flex flex-col md:flex-row bg-white font-sans">
       <motion.div
@@ -60,7 +78,8 @@ function UserLogin() {
           </p>
 
           {/* Form Content (Dynamic) */}
-          <form onSubmit={(e) => e.preventDefault()}>
+          {/* Changed onSubmit handler to call handleSubmit */}
+          <form onSubmit={handleSubmit}>
             <motion.div
               key="landlord"
               initial={{ opacity: 0, y: 10 }}
@@ -71,12 +90,14 @@ function UserLogin() {
             >
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                 User Code
+                  User Code
                 </label>
                 <input
                   type="number"
                   placeholder="*********23456"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  className="w-full border border-gray-300 rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  value={userCode}
+                  onChange={(e) => setUserCode(e.target.value)}
                 />
               </div>
               <div>
@@ -86,26 +107,39 @@ function UserLogin() {
                 <input
                   type="password"
                   placeholder="Enter your password"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  className="w-full border border-gray-300 rounded-2xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex justify-between items-center text-sm">
                 <div className="flex items-center">
-                  <input type="checkbox" id="rememberLandlord" className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                  <label htmlFor="rememberLandlord" className="ml-2 text-gray-600">
+                  <input
+                    type="checkbox"
+                    id="rememberLandlord"
+                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <label
+                    htmlFor="rememberLandlord"
+                    className="ml-2 text-gray-600"
+                  >
                     Remember me
                   </label>
                 </div>
-                <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">
+                <a
+                  href="#"
+                  className="text-blue-600 hover:text-blue-700 font-medium"
+                >
                   Forgot Password?
                 </a>
               </div>
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 mt-4"
+                type="submit" 
+                className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:bg-blue-700 transition duration-300 mt-4"
               >
-                Login <IoIosArrowForward size={16} className="mx-2 text-white inline-block"/>
+                Login <IoIosArrowForward size={16} className="mx-2 text-white inline-block" />
               </motion.button>
             </motion.div>
           </form>
@@ -142,7 +176,10 @@ function UserLogin() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{" "}
-            <a onClick={HandleSignUp} className="cursor-pointer text-blue-600 hover:text-blue-700 font-semibold">
+            <a
+              onClick={HandleSignUp}
+              className="cursor-pointer text-blue-600 hover:text-blue-700 font-semibold"
+            >
               Sign Up Now
             </a>
           </p>

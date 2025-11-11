@@ -230,12 +230,15 @@ export default function App() {
         setTimeout(() => {
             setIsLoading(false);
             setSubmissionStatus("success");
+            // Clear fields
             setName("");
             setEmail("");
             setPhone("");
             setPassword("");
             setConfirmPassword("");
             setSelectedBusinessNatures([]);
+            navigate("/"); 
+            
         }, 1500);
     };
 
@@ -291,7 +294,7 @@ export default function App() {
                         <NotificationBanner
                             message={
                                 submissionStatus === "success"
-                                    ? "Registration successful! You can now log in."
+                                    ? "Registration successful! Redirecting..." // Updated message for redirect
                                     : "An error occurred during registration."
                             }
                             type={submissionStatus}
