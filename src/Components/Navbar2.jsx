@@ -613,7 +613,7 @@ export default function Navbar() {
                                 <FaHome className="text-white" />
                                 <span>Home</span>
                             </a>
-                            <a onClick={HandleLoginClick} className="flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
+                            <a onClick={HandleLoginClick} className="cursor-pointer flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
                                 <FaUser />
                                 <span>Login</span>
                             </a>
