@@ -8,6 +8,7 @@ const UserRegisterForm = () => (
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: -10 }}
     transition={{ duration: 0.3 }}
+    className="space-y-4"
   >
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -58,7 +59,7 @@ const UserRegisterForm = () => (
       whileTap={{ scale: 0.99 }}
       className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 mt-4"
     >
-      Register as User →
+      Sign Up
     </motion.button>
   </motion.div>
 );

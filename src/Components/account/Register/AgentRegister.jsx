@@ -62,7 +62,7 @@ const RealtorStepForm = () => {
   };
 
   const inputClass =
-    "w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 transition duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-[--primary-blue]";
+    "w-full border border-gray-300 focus:ring-blue-500 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-400 transition duration-200 focus:ring-2 ";
   const primaryButtonClass =
     "text-white font-semibold py-3 rounded-xl shadow-lg transition duration-300 hover:opacity-90";
   const secondaryButtonClass =

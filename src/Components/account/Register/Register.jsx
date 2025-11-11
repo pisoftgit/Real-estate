@@ -29,7 +29,7 @@ function UserRegister() {
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent text-white p-12">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: -100 }}
+                        animate={{ opacity: 1, y: -150 }}
                         transition={{ delay: 0.2, duration: 0.6 }}
                         className="max-w-lg"
                     >
