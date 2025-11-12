@@ -178,7 +178,6 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [submissionStatus, setSubmissionStatus] = useState(null);
 
-    // 👇 Password visibility toggles
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -252,7 +251,7 @@ export default function App() {
                 className="hidden md:flex md:w-1/2 lg:w-3/5 relative overflow-hidden"
             >
                 <img
-                    src="https://pimwp.s3-accelerate.amazonaws.com/2022/01/6-emerging-trends-in-residential-real-estate-in-the-post-COVID-19-era-FB-1200x700-compressed.jpg"
+                    src="/login-RegisterPhoto.webp"
                     alt="Modern House Interior"
                     className="w-full h-full object-cover"
                 />
