@@ -65,13 +65,8 @@ const dropdownItems = [
 ];
 
 
-const utilityItems = [
-    { name: 'Home', icon: FaHome, color: 'text-blue-400', path: '/' },
-    { name: 'Login / Sign Up', icon: FaUser, color: 'text-gray-700', path: '/userLogin' },
-    { name: 'Call Us: 9874562145', icon: FaPhoneAlt, color: 'text-gray-700', path: '#' },
-];
-
-const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
+// ✅ Mobile Menu Component
+const MobileMenu = ({ isOpen, onClose, items, primaryColor, username, onLogin, onLogout }) => {
     const [expandedItem, setExpandedItem] = useState(null);
 
     useEffect(() => {
@@ -114,7 +109,7 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', stiffness: 400, damping: 40 }}
                     >
-
+                        {/* Header */}
                         <div className="flex justify-between items-center mb-4 pb-4 border-b">
                             <h2 className="text-xl font-extrabold font-It tracking-tight" style={{ color: primaryColor }}>
                                 <a href='/'>RealEstate</a>
@@ -124,23 +119,44 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
                             </button>
                         </div>
 
+                        {/* Account Section */}
                         <div className="flex flex-col space-y-2 mt-4">
                             <h3 className="text-xs font-semibold font-ns uppercase text-gray-500">
                                 Account & Support
                             </h3>
-                            {utilityItems.map((item, index) => (
-                                <a
-                                    key={`util-${index}`}
-                                    href={item.path || '#'}
+
+                            {username ? (
+                                <>
+                                    <div className="py-3 px-4 flex items-center space-x-4 rounded-xl text-gray-700 bg-gray-50">
+                                        <FaUser className="text-xl text-blue-500" />
+                                        <span className="font-semibold font-ns">{username}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => {
+                                            onLogout();
+                                            onClose();
+                                        }}
+                                        className="py-3 px-4 flex items-center space-x-4 rounded-xl text-gray-700 hover:bg-gray-100 transition-colors"
+                                    >
+                                        <FaSignOutAlt className="text-xl text-red-500" />
+                                        <span className="font-semibold font-ns">Logout</span>
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        onLogin();
+                                        onClose();
+                                    }}
                                     className="py-3 px-4 flex items-center space-x-4 rounded-xl text-gray-700 hover:bg-gray-100 transition-colors"
-                                    onClick={onClose}
                                 >
-                                    <item.icon className={`text-xl ${item.color}`} />
-                                    <span className="font-semibold font-ns">{item.name}</span>
-                                </a>
-                            ))}
+                                    <FaUser className="text-xl text-gray-600" />
+                                    <span className="font-semibold font-ns">Login / Sign Up</span>
+                                </button>
+                            )}
                         </div>
 
+                        {/* Property Services */}
                         <h3 className="text-xs font-semibold font-ns uppercase text-gray-500 pt-6 border-t mt-6">
                             Property Services
                         </h3>
@@ -213,30 +229,53 @@ const MobileMenu = ({ isOpen, onClose, items, primaryColor }) => {
     );
 };
 
+
+// ✅ Navbar Component
 export default function Navbar() {
     const [hoveredDropdown, setHoveredDropdown] = useState(null);
     const [currentCity, setCurrentCity] = useState('Mumbai');
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [username, setUsername] = useState(null);
     const navigate = useNavigate();
 
     const cities = ['Bangalore', 'Delhi', 'Mumbai', 'Chennai', 'Pune', 'Hyderabad'];
 
-    const dropdownVariants = {
-        initial: { opacity: 0, y: -10 },
-        animate: { opacity: 1, y: 0, transition: { duration: 0.25 } },
-        exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
-    };
+    useEffect(() => {
+        const storedUser = localStorage.getItem("userData");
+        const token = localStorage.getItem("token");
+
+        if (storedUser && token) {
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                setUsername(parsedUser.organization?.name || parsedUser.user?.name || "User");
+            } catch (err) {
+                console.error("Error parsing user data:", err);
+            }
+        } else {
+            setUsername(null);
+        }
+    }, []);
 
     const handleCityChange = (city) => {
         setCurrentCity(city);
         setHoveredDropdown(null);
     };
 
+    const handleLoginClick = () => {
+        navigate("/userLogin");
+    };
 
-    const HandleLoginClick = () => {
-        navigate("/userLogin")
-    }
+    const handleLogout = () => {
+        localStorage.clear();
+        setUsername(null);
+        navigate("/");
+    };
 
+    const dropdownVariants = {
+        initial: { opacity: 0, y: -10 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+        exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+    };
 
     return (
         <nav className="shadow-lg shadow-[#426ff542] font-ns text-sm z-50 fixed top-0 w-full">
@@ -296,13 +335,33 @@ export default function Navbar() {
                                 <FaHome className="text-white" />
                                 <span>Home</span>
                             </a>
-                            <span onClick={HandleLoginClick} className="cursor-pointer flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1">
-                                <FaUser />
-                                <span>Login</span>
-                            </span>
+
+                            {username ? (
+                                <>
+                                    <span className="flex items-center space-x-2">
+                                        <FaUser />
+                                        <span>{username}</span>
+                                    </span>
+                                    <span
+                                        onClick={handleLogout}
+                                        className="cursor-pointer flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1"
+                                    >
+                                        <FaSignOutAlt />
+                                        <span>Logout</span>
+                                    </span>
+                                </>
+                            ) : (
+                                <span
+                                    onClick={handleLoginClick}
+                                    className="cursor-pointer flex items-center space-x-1 hover:bg-white/20 transition-all duration-300 rounded-full px-3 py-1"
+                                >
+                                    <FaUser />
+                                    <span>Login</span>
+                                </span>
+                            )}
                         </div>
 
-                        {/* Post Property button */}
+                        {/* Post Property */}
                         <a
                             href="/sell/post-property"
                             className="bg-white hidden text-black font-bold rounded-full px-4 py-2 md:flex items-center space-x-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
@@ -385,12 +444,15 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu Component */}
+            {/* Mobile Menu */}
             <MobileMenu
                 isOpen={isMobileMenuOpen}
                 items={dropdownItems}
                 onClose={() => setMobileMenuOpen(false)}
                 primaryColor={PRIMARY_COLOR}
+                username={username}
+                onLogin={handleLoginClick}
+                onLogout={handleLogout}
             />
         </nav>
     );

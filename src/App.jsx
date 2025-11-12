@@ -73,7 +73,6 @@ function AppWrapper() {
             }
           />
 
-          {/* 🚫 Public Routes */}
           <Route path="/userLogin" element={<UserLogin />} />
           <Route path="/UserRegister" element={<UserRegister />} />
         </Routes>
