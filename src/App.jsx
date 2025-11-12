@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Loader from './Components/Loader';
 
-
 // Pages
 import Home from './Pages/Home';
 import SearchPage from './Pages/Search';
-// import Details from './Pages/Details';
 import PropertyDetails from './Pages/PropertyDetails';
 import AgentProfile from './Components/agents';
 import AgentsPage from './Pages/AllAgents';
 import UserLogin from './Components/account/Login/UserLogin';
 import UserRegister from './Components/account/Register/Register';
 
+// Protected route
+import ProtectedRoute from './Components/account/ProtectedRoute';
 
 function AppWrapper() {
   const location = useLocation();
@@ -31,24 +31,58 @@ function AppWrapper() {
       {loading && <Loader />}
       {!loading && (
         <Routes>
-          <Route index element={<Home />} />
-          <Route path='/search' element={<SearchPage />} />
-          <Route path='/allAgents' element={<AgentsPage />} />
-          <Route path='/PropertyDetails' element={<PropertyDetails />} />
-          <Route path='/agents' element={<AgentProfile />} />
-          <Route path='/userLogin' element={<UserLogin />} />
-          <Route path='/UserRegister' element={<UserRegister />} />
+          {/* ✅ Protected Routes */}
+          <Route
+            index
+            element={
+              // <ProtectedRoute>
+                <Home />
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              // <ProtectedRoute>
+                <SearchPage />
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/allAgents"
+            element={
+              // <ProtectedRoute>
+                <AgentsPage />
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/PropertyDetails"
+            element={
+              <ProtectedRoute>
+                <PropertyDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/agents"
+            element={
+              <ProtectedRoute>
+                <AgentProfile />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 🚫 Public Routes */}
+          <Route path="/userLogin" element={<UserLogin />} />
+          <Route path="/UserRegister" element={<UserRegister />} />
         </Routes>
       )}
     </>
   );
 }
 
-
-
-
-// main app exporting 
-
+// main app exporting
 function App() {
   return (
     <BrowserRouter>

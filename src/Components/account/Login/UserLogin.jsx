@@ -43,14 +43,12 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState(null);
     const [messageType, setMessageType] = useState("error");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userData, setUserData] = useState(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const clearMessage = () => setMessage(null);
 
     const HandleSignUp = () => {
-        navigate('/UserRegister')
+        navigate('/UserRegister');
     };
 
     const HandleLoginClick = async () => {
@@ -77,9 +75,12 @@ function App() {
             const data = await response.json();
 
             if (response.ok) {
-                setUserData(data);
-                setIsLoggedIn(true);
                 console.log("✅ Login successful:", data);
+                localStorage.setItem("userData", JSON.stringify(data));
+                localStorage.setItem("token", JSON.stringify(data.secretKey));
+                localStorage.setItem("isLoggedIn", "true");
+
+                navigate("/");
             } else {
                 setMessage(data.message || "Invalid User Code or Password.");
                 setMessageType("error");
@@ -97,66 +98,6 @@ function App() {
         e.preventDefault();
         if (!isLoading) HandleLoginClick();
     };
-
-    if (isLoggedIn) {
-        return (
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="min-h-screen flex items-center justify-center bg-green-50 p-6"
-            >
-                <div className="max-w-xl w-full bg-white p-8 rounded-xl shadow-2xl border border-green-200">
-                    <h1 className="text-3xl font-bold text-green-600 mb-4">
-                        Welcome, {userData?.user?.name || "User"}!
-                    </h1>
-                    <p className="text-lg text-gray-700 mb-6">
-                        You have successfully logged in to the Real Estate Platform.
-                    </p>
-
-                    <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">User Code:</span>{" "}
-                            {userData?.user?.usercode}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">Organization:</span>{" "}
-                            {userData?.organization?.name}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">Branch:</span>{" "}
-                            {userData?.branch?.branch}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">Privileges:</span>{" "}
-                            {userData?.privileges?.join(", ")}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">Secret Key:</span>{" "}
-                            {userData?.secretKey?.substring(0, 30)}...
-                        </p>
-                        <p className="text-sm text-gray-600">
-                            <span className="font-semibold text-gray-800">Current Day:</span>{" "}
-                            {userData?.currentDay}
-                        </p>
-                    </div>
-
-                    <motion.button
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        onClick={() => {
-                            setIsLoggedIn(false);
-                            setUserData(null);
-                            setUserCode("");
-                            setPassword("");
-                        }}
-                        className="w-full bg-red-500 text-white font-semibold py-3 rounded-xl shadow-lg hover:bg-red-600 transition duration-300 mt-6"
-                    >
-                        Logout and Return to Login
-                    </motion.button>
-                </div>
-            </motion.div>
-        );
-    }
 
     return (
         <div className="max-h-screen min-h-screen flex flex-col md:flex-row bg-gray-50 font-sans">
