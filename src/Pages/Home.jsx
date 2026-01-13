@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css'
@@ -19,14 +19,13 @@ import Properties from '../Components/Properties'
 import Footer from '../Components/Footer'
 import { useNavigate } from 'react-router-dom'
 import PopularProperties from '../Components/Explore'
-import AgentProfile from '../Components/agents'
 import FeaturedAgents from '../Components/FeaturedAgents'
-
+import axios from 'axios'
+import { BaseURL2 } from '../../BaseURL'
 
 const citiesList = ['Mumbai', 'Delhi', 'Chennai', 'Pune', 'Hyderabad']
 const localitiesList = ['Andheri', 'Koramangala', 'T. Nagar', 'Baner', 'Banjara Hills']
 const budgets = ['0 - 50L', '50L - 1Cr', '1Cr - 2Cr', '2Cr+']
-const propertyTypes = ['Flat', 'Plot', 'Commercial']
 const bhkOptions = ['1 BHK', '2 BHK', '3 BHK', '4+ BHK']
 const postedBy = ['Owner', 'Dealer', 'Builder']
 
@@ -37,16 +36,25 @@ const slides = [
     { image: './hero_bg_4.jpg' }
 ]
 
-// Dropdown animation
 const dropdownVariants = {
     initial: { opacity: 0, y: -8 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.25 } },
     exit: { opacity: 0, y: -8, transition: { duration: 0.2 } }
 }
 
-const FilterDropdown = ({ label, icon: Icon, options }) => {
+const FilterDropdown = ({ label, icon: Icon, options, selected, onSelect }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const [selected, setSelected] = useState(options[0])
+    const displayValue = selected?.name || label
+
+    const handleSelect = (opt) => {
+        onSelect(opt)
+        setIsOpen(false)
+    }
+
+    const handleClear = () => {
+        onSelect(null)
+        setIsOpen(false)
+    }
 
     return (
         <div
@@ -55,10 +63,12 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
             onMouseLeave={() => setIsOpen(false)}
         >
             <button
-                className="flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-blue-500 w-full md:w-auto text-sm bg-white"
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-2xl border w-full md:w-auto text-sm bg-white transition-all ${
+                    selected ? 'border-blue-700 text-blue-700 font-semibold' : 'border-blue-500 text-gray-800'
+                }`}
             >
                 <Icon className="text-blue-500 text-base" />
-                <span>{selected}</span>
+                <span>{displayValue}</span>
                 <FaChevronDown className="text-xs text-gray-400" />
             </button>
 
@@ -69,18 +79,25 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="absolute top-full mt-2 left-0 bg-white border border-blue-300 shadow-md rounded-md z-50 w-48"
+                        className="absolute top-full mt-2 left-0 bg-white border border-blue-300 shadow-md rounded-md z-50 w-48 max-h-60 overflow-y-auto"
                     >
-                        {options.map((opt, i) => (
+                        {selected && (
+                            <div
+                                onClick={handleClear}
+                                className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 cursor-pointer text-sm border-b font-semibold"
+                            >
+                                Clear Selection
+                            </div>
+                        )}
+                        {options?.map((opt, i) => (
                             <div
                                 key={i}
-                                onClick={() => {
-                                    setSelected(opt)
-                                    setIsOpen(false)
-                                }}
-                                className="px-4 py-2 hover:bg-blue-100 hover:text-blue-600 cursor-pointer text-sm"
+                                onClick={() => handleSelect(opt)}
+                                className={`px-4 py-2 hover:bg-blue-100 hover:text-blue-600 cursor-pointer text-sm ${
+                                    selected?.id === opt.id ? 'bg-blue-100 text-blue-600 font-semibold' : 'text-gray-800'
+                                }`}
                             >
-                                {opt}
+                                {opt.name || opt}
                             </div>
                         ))}
                     </motion.div>
@@ -91,78 +108,98 @@ const FilterDropdown = ({ label, icon: Icon, options }) => {
 }
 
 export default function Home() {
-    const prevRef = useRef(null)
-    const nextRef = useRef(null)
     const navigate = useNavigate()
+    const [propertyTypes, setPropertyTypes] = useState([])
+    const [selectedPropertyType, setSelectedPropertyType] = useState(null)
+
+    useEffect(() => {
+        const fetchPropertyTypes = async () => {
+            try {
+                const res = await axios.get(`${BaseURL2}/property-stock-unit-items`)
+                // Map to objects with id and name
+                const mappedTypes = (res.data || res.data?.data || []).map(item => ({
+                    id: item.id,
+                    name: item.itemName
+                }))
+                setPropertyTypes(mappedTypes)
+            } catch (error) {
+                console.log("Error fetching property types:", error)
+            }
+        }
+        fetchPropertyTypes()
+    }, [])
 
     const HandleSearch = () => {
-        navigate("/search")
+        const params = new URLSearchParams()
+        if (selectedPropertyType) {
+            params.append('propertyStockItemsId', selectedPropertyType.id)
+        }
+        navigate(`/search?${params.toString()}`)
     }
 
     return (
         <>
             <Navbar />
 
+            {/* ------------------ HERO SECTION ------------------ */}
             <section className="relative h-[75vh] md:h-[80vh] lg:h-[750px] z-10">
                 <div className="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%] w-[90%] container text-center px-4">
-
                     <div className="text-white text-center space-y-2">
                         <motion.h1
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                            transition={{ duration: 0.6 }}
                             className="text-white text-2xl md:text-4xl xl:text-5xl font-extrabold leading-tight font-ns drop-shadow-lg"
                         >
-                            Find Your Dream Home with <span className="text-[#cae1ff] font-It">RealEstate</span>
+                            Find Your Dream Home with{' '}
+                            <span className="text-[#cae1ff] font-It">RealEstate</span>
                         </motion.h1>
 
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
+                            transition={{ delay: 0.3, duration: 0.5 }}
                             className="text-base md:text-2xl font-semibold text-white drop-shadow font-ns mb-4"
                         >
                             Explore properties in your favorite localities across India
                         </motion.h2>
                     </div>
 
-
+                    {/* ------------------ SEARCH FILTERS ------------------ */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-white/85 lg:bg-white mx-auto md:max-w-5xl rounded-xl md:rounded-4xl border-blue-200 border-2 shadow-xl px-5 lg:px-2 py-4 grid grid-cols-2  md:flex md:flex-row md:flex-wrap items-center justify-center gap-2 lg:gap-4"
+                        className="bg-white/85 lg:bg-white mx-auto md:max-w-5xl rounded-xl md:rounded-4xl border-blue-200 border-2 shadow-xl px-5 lg:px-2 py-4 grid grid-cols-2 md:flex md:flex-row md:flex-wrap items-center justify-center gap-2 lg:gap-4"
                     >
-                        <FilterDropdown label="City" icon={FaMapMarkerAlt} options={citiesList} />
-                        <FilterDropdown label="Locality" icon={FaBuilding} options={localitiesList} />
-                        <FilterDropdown label="Budget" icon={FaRupeeSign} options={budgets} />
-                        <FilterDropdown label="Property Type" icon={FaHome} options={propertyTypes} />
-                        <FilterDropdown label="BHK" icon={FaBed} options={bhkOptions} />
-                        <FilterDropdown label="Posted By" icon={FaUser} options={postedBy} />
+                        <FilterDropdown label="City" icon={FaMapMarkerAlt} options={citiesList} selected={null} onSelect={() => {}} />
+                        <FilterDropdown label="Locality" icon={FaBuilding} options={localitiesList} selected={null} onSelect={() => {}} />
+                        <FilterDropdown label="Budget" icon={FaRupeeSign} options={budgets} selected={null} onSelect={() => {}} />
+                        <FilterDropdown
+                            label="Property Type"
+                            icon={FaHome}
+                            options={propertyTypes}
+                            selected={selectedPropertyType}
+                            onSelect={setSelectedPropertyType}
+                        />
+                        <FilterDropdown label="BHK" icon={FaBed} options={bhkOptions} selected={null} onSelect={() => {}} />
+                        <FilterDropdown label="Posted By" icon={FaUser} options={postedBy} selected={null} onSelect={() => {}} />
 
                         <motion.button
                             whileTap={{ scale: 0.95 }}
-                            onClick={HandleSearch}
                             whileHover={{ scale: 1.03 }}
+                            onClick={HandleSearch}
                             className="bg-[#426ff5] text-white font-bold rounded-full px-6 py-2 flex items-center justify-center hover:bg-blue-700 transition w-full md:w-auto col-span-full"
                         >
-                            <FaSearch className="mr-2" onClick={HandleSearch} />
+                            <FaSearch className="mr-2" />
                             Search
                         </motion.button>
                     </motion.div>
-
                 </div>
 
+                {/* ------------------ SLIDER ------------------ */}
                 <Swiper
                     modules={[Autoplay, Navigation]}
-                    navigation={{
-                        prevEl: prevRef.current,
-                        nextEl: nextRef.current
-                    }}
-                    onBeforeInit={swiper => {
-                        swiper.params.navigation.prevEl = prevRef.current
-                        swiper.params.navigation.nextEl = nextRef.current
-                    }}
                     autoplay={{ delay: 3000 }}
                     loop={true}
                     className="h-full"
@@ -171,12 +208,7 @@ export default function Home() {
                         <SwiperSlide key={i}>
                             <div
                                 className="h-full w-full bg-cover bg-center relative"
-                                style={{
-                                    backgroundImage: `url(${slide.image})`,
-                                    backgroundPosition: 'center',
-                                    backgroundSize: 'cover',
-                                    backgroundAttachment: 'fixed'
-                                }}
+                                style={{ backgroundImage: `url(${slide.image})` }}
                             >
                                 <div className="absolute inset-0 bg-black/50 z-10"></div>
                             </div>
@@ -185,25 +217,10 @@ export default function Home() {
                 </Swiper>
             </section>
 
-            {/* Properties */}
-            <section>
-                <Properties />
-            </section>
-
-            {/* agents */}
-            <section>
-                <FeaturedAgents />
-            </section>
-
-            {/* Popular Properties */}
-            <section>
-                <PopularProperties />
-            </section>
-
-            <section>
-                <Footer />
-            </section>
-
+            <Properties />
+            <FeaturedAgents />
+            <PopularProperties />
+            <Footer />
         </>
     )
 }

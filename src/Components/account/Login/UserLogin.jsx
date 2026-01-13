@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { TiSocialFacebook } from "react-icons/ti";
 import { IoIosArrowForward } from "react-icons/io";
 import { RotatingLines } from "react-loader-spinner";
-import { BaseURL } from "../BaseURL"; 
+import { BaseURL } from "../../../../BaseURL"; 
 import { useNavigate } from "react-router-dom";
 
 const MessageModal = ({ message, type, onClose }) => {
@@ -14,7 +14,7 @@ const MessageModal = ({ message, type, onClose }) => {
         "p-3 rounded-lg text-sm font-medium transition duration-300 shadow-lg mb-4";
     const styleMap = {
         error: "bg-red-100 text-red-700 border border-red-300",
-        success: "bg-green-100 text-green-700 border border-green-300",
+        success: "bg-green-100 text-gre en-700 border border-green-300",
     };
 
     return (

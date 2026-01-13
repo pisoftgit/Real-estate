@@ -1,1 +1,0 @@
-export const BaseURL = "https://project.pisofterp.com/realestate/api/v1"
