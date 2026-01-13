@@ -97,8 +97,8 @@ const PropertyCard = ({ prop, openDetailsDrawer }) => {
             whileHover={{ scale: 1.005 }}
         >
             {/* Image Section - Loops over all images */}
-            <div className="w-full md:w-1/3 h-64 md:h-auto relative bg-gray-100">
-                <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto h-full snap-x snap-mandatory scrollbar-hide">
+            <div className="w-full md:w-1/3 h-64 md:h-85 relative bg-gray-100">
+                <div className="flex md:flex-col overflow-x-auto md:overflow-hidden h-full snap-x snap-mandatory">
                     {prop.propertyMediaList?.length > 0 ? (
                         prop.propertyMediaList.map((media) => (
                             <img
