@@ -57,7 +57,7 @@ function AppWrapper() {
             }
           />
           <Route
-            path="/PropertyDetails"
+            path="/PropertyDetails/:id"
             element={
               <ProtectedRoute>
                 <PropertyDetails />
