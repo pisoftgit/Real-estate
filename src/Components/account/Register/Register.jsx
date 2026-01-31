@@ -16,7 +16,7 @@ import {
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BaseURL } from "../../../../BaseURL";
+import { BaseURL3 } from "../../../../BaseURL";
 
 // ---------------- Password Validation Helper ----------------
 const validatePassword = (pwd) => {
@@ -239,7 +239,7 @@ export default function App() {
             };
 
             // --- API POST Request ---
-            const response = await axios.post(`${BaseURL}/user/add`, userData);
+            const response = await axios.post(`${BaseURL3}/user/add`, userData);
 
             if (response.status === 200 || response.status === 201) {
                 setSubmissionStatus("success");
