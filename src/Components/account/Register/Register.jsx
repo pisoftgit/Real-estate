@@ -15,6 +15,8 @@ import {
 } from "react-icons/fa";
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BaseURL } from "../../../../BaseURL";
 
 // ---------------- Password Validation Helper ----------------
 const validatePassword = (pwd) => {
@@ -49,7 +51,7 @@ const InputField = ({
     value,
     onChange,
     error,
-    toggleVisibility, 
+    toggleVisibility,
 }) => (
     <div className="space-y-1">
         <div className="relative">
@@ -66,8 +68,8 @@ const InputField = ({
                 required
                 placeholder={placeholder}
                 className={`w-full pl-10 pr-10 py-3 border rounded-2xl focus:ring-4 transition duration-150 text-sm placeholder-gray-500 ${error
-                        ? "border-red-400 focus:border-red-500 focus:ring-red-100"
-                        : "border-gray-300 focus:border-blue-500 focus:ring-blue-100"
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-100"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-100"
                     }`}
             />
 
@@ -151,8 +153,8 @@ const NotificationBanner = ({ message, type }) => (
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -50, opacity: 0 }}
         className={`p-4 rounded-xl shadow-lg mb-4 text-sm font-bold ${type === "success"
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
+            ? "bg-green-100 text-green-800"
+            : "bg-red-100 text-red-800"
             }`}
     >
         <div className="flex items-center">
@@ -177,6 +179,7 @@ export default function App() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [submissionStatus, setSubmissionStatus] = useState(null);
+    const [serverMessage, setServerMessage] = useState("");
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -196,18 +199,18 @@ export default function App() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
         setSubmissionStatus(null);
+        setServerMessage("");
 
         const newErrors = {};
         const passwordCheck = validatePassword(password);
 
+        // --- Client Side Validation ---
         if (!name.trim())
-            newErrors.name = isRealtor
-                ? "Agency Name is required."
-                : "Full Name is required.";
+            newErrors.name = isRealtor ? "Agency Name is required." : "Full Name is required.";
         if (!email.trim()) newErrors.email = "Email is required.";
         if (!phone.trim()) newErrors.phone = "Phone number is required.";
         if (password !== confirmPassword)
@@ -215,8 +218,7 @@ export default function App() {
         if (!passwordCheck.isValid)
             newErrors.password = "Password is not strong enough.";
         if (isRealtor && selectedBusinessNatures.length === 0)
-            newErrors.businessNature =
-                "Please select at least one business nature.";
+            newErrors.businessNature = "Please select at least one business nature.";
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -225,20 +227,43 @@ export default function App() {
 
         setIsLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
+        try {
+            // --- Prepare Data ---
+            const userData = {
+                name,
+                email,
+                phone,
+                password,
+                role: role.toLowerCase(),
+                businessNature: isRealtor ? selectedBusinessNatures : [],
+            };
+
+            // --- API POST Request ---
+            const response = await axios.post(`${BaseURL}/user/add`, userData);
+
+            if (response.status === 200 || response.status === 201) {
+                setSubmissionStatus("success");
+                setServerMessage("Registration successful! Redirecting...");
+                
+                // Reset Form
+                setName("");
+                setEmail("");
+                setPhone("");
+                setPassword("");
+                setConfirmPassword("");
+                setSelectedBusinessNatures([]);
+
+                setTimeout(() => navigate("/userLogin"), 2000);
+            }
+        } catch (error) {
+            console.error("API Error:", error);
+            setSubmissionStatus("error");
+            setServerMessage(
+                error.response?.data?.message || "An error occurred during registration."
+            );
+        } finally {
             setIsLoading(false);
-            setSubmissionStatus("success");
-            // Clear fields
-            setName("");
-            setEmail("");
-            setPhone("");
-            setPassword("");
-            setConfirmPassword("");
-            setSelectedBusinessNatures([]);
-            navigate("/"); 
-            
-        }, 1500);
+        }
     };
 
     return (
@@ -274,6 +299,7 @@ export default function App() {
                     </motion.p>
                 </div>
             </motion.div>
+
             {/* RIGHT FORM SIDE */}
             <motion.div
                 initial={{ x: 50, opacity: 0 }}
@@ -291,11 +317,7 @@ export default function App() {
 
                     {submissionStatus && (
                         <NotificationBanner
-                            message={
-                                submissionStatus === "success"
-                                    ? "Registration successful! Redirecting..." // Updated message for redirect
-                                    : "An error occurred during registration."
-                            }
+                            message={serverMessage}
                             type={submissionStatus}
                         />
                     )}
@@ -332,7 +354,6 @@ export default function App() {
                         </button>
                     </div>
 
-                    {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <InputField
                             id="name"
@@ -396,7 +417,6 @@ export default function App() {
                             error={errors.phone}
                         />
 
-                        {/* Password Field */}
                         <InputField
                             id="password"
                             name="new-password"
@@ -414,7 +434,6 @@ export default function App() {
 
                         <PasswordStrengthIndicator password={password} />
 
-                        {/* Confirm Password Field */}
                         <InputField
                             id="confirmPassword"
                             name="confirm-password"
@@ -436,11 +455,10 @@ export default function App() {
                             disabled={isLoading}
                             className="w-full flex justify-center py-3 px-4 rounded-xl shadow-lg text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-150 mt-6 disabled:bg-blue-400 disabled:cursor-not-allowed"
                         >
-                            {isLoading ? "Loading..." : "Register and Create Account"}
+                            {isLoading ? "Saving..." : "Register and Create Account"}
                         </button>
                     </form>
 
-                    {/* Social Buttons */}
                     <div className="relative flex items-center justify-center py-6">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-200"></div>
@@ -462,12 +480,12 @@ export default function App() {
 
                     <p className="text-center text-sm text-gray-500 mt-6">
                         Already have an account?{" "}
-                        <a
+                        <span
                             onClick={HandleSignIn}
                             className="text-blue-600 hover:text-blue-700 font-bold cursor-pointer transition duration-150"
                         >
                             Sign in now
-                        </a>
+                        </span>
                     </p>
                 </div>
             </motion.div>
