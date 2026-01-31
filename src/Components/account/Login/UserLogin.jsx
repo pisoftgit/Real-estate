@@ -75,7 +75,7 @@ function App() {
             const data = await response.json();
 
             if (response.ok) {
-                console.log("✅ Login successful:", data);
+                console.log("Login successful:", data);
                 localStorage.setItem("userData", JSON.stringify(data));
                 localStorage.setItem("token", JSON.stringify(data.secretKey));
                 localStorage.setItem("isLoggedIn", "true");

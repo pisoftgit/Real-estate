@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { TiSocialFacebook } from "react-icons/ti";
@@ -16,11 +16,11 @@ import {
 import { HiOutlineBriefcase } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BaseURL3 } from "../../../../BaseURL";
+import { BaseURL2 } from "../../../../BaseURL"; // Using BaseURL2 as requested
 
 // ---------------- Password Validation Helper ----------------
 const validatePassword = (pwd) => {
-    const minLength = 8;
+    const minLength = 6;
     const hasUpperCase = /[A-Z]/.test(pwd);
     const hasLowerCase = /[a-z]/.test(pwd);
     const hasNumber = /[0-9]/.test(pwd);
@@ -32,12 +32,7 @@ const validatePassword = (pwd) => {
         hasLowerCase,
         hasNumber,
         hasSpecialChar,
-        isValid:
-            pwd.length >= minLength &&
-            hasUpperCase &&
-            hasLowerCase &&
-            hasNumber &&
-            hasSpecialChar,
+        isValid: pwd.length >= minLength, // Flexible for "000000" style passwords
     };
 };
 
@@ -100,47 +95,18 @@ const InputField = ({
 const PasswordStrengthIndicator = ({ password }) => {
     if (!password) return null;
     const checks = validatePassword(password);
-    const {
-        minLength,
-        hasUpperCase,
-        hasLowerCase,
-        hasNumber,
-        hasSpecialChar,
-        isValid,
-    } = checks;
-
-    const checkItem = (isMet, label) => (
-        <li
-            key={label}
-            className={`flex items-center text-xs transition duration-200 ${isMet ? "text-green-600" : "text-gray-500"
-                }`}
-        >
-            {isMet ? (
-                <FaCheckCircle className="mr-1 h-3 w-3" />
-            ) : (
-                <FaExclamationCircle className="mr-1 h-3 w-3" />
-            )}
-            {label}
-        </li>
-    );
+    const { minLength, isValid } = checks;
 
     return (
-        <div
-            className={`p-3 text-sm rounded-lg mt-2 ${isValid ? "bg-green-50" : "bg-yellow-50"
-                } border border-gray-200`}
-        >
-            <p
-                className={`font-semibold mb-1 ${isValid ? "text-green-700" : "text-gray-700"
-                    }`}
-            >
+        <div className={`p-3 text-sm rounded-lg mt-2 ${isValid ? "bg-green-50" : "bg-yellow-50"} border border-gray-200`}>
+            <p className={`font-semibold mb-1 ${isValid ? "text-green-700" : "text-gray-700"}`}>
                 Password Strength: {isValid ? "Strong" : "Improvement needed"}
             </p>
-            <ul className="grid grid-cols-2 gap-y-1 gap-x-4 list-none pl-0">
-                {checkItem(minLength, "Min 8 characters")}
-                {checkItem(hasUpperCase, "Uppercase letter")}
-                {checkItem(hasLowerCase, "Lowercase letter")}
-                {checkItem(hasNumber, "A number")}
-                {checkItem(hasSpecialChar, "Special character")}
+            <ul className="list-none pl-0">
+                <li className={`flex items-center text-xs ${minLength ? "text-green-600" : "text-gray-500"}`}>
+                    {minLength ? <FaCheckCircle className="mr-1 h-3 w-3" /> : <FaExclamationCircle className="mr-1 h-3 w-3" />}
+                    Min 6 characters
+                </li>
             </ul>
         </div>
     );
@@ -169,13 +135,14 @@ const NotificationBanner = ({ message, type }) => (
 );
 
 export default function App() {
-    const [role, setRole] = useState("Buyer");
+    const [role, setRole] = useState("BUYER"); // Using Uppercase to match payload requirements
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [selectedBusinessNatures, setSelectedBusinessNatures] = useState([]);
+    const [businessNaturesFromApi, setBusinessNaturesFromApi] = useState([]);
+    const [selectedBusinessIds, setSelectedBusinessIds] = useState([]);
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [submissionStatus, setSubmissionStatus] = useState(null);
@@ -184,15 +151,27 @@ export default function App() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const isRealtor = role === "Realtor";
+    const isRealtor = role === "REALTOR";
     const navigate = useNavigate();
     const HandleSignIn = () => navigate("/UserLogin");
 
-    const handleBusinessNatureToggle = (nature) => {
-        setSelectedBusinessNatures((prev) =>
-            prev.includes(nature)
-                ? prev.filter((n) => n !== nature)
-                : [...prev, nature]
+    // Fetch Business Natures on component load
+    useEffect(() => {
+        const fetchBusinessNatures = async () => {
+            try {
+                const res = await axios.get(`${BaseURL2}/builders/getAllRealEstateUserCategories`);
+                // Expected format from API: [{id: 362050, name: 'Builder'}, ...]
+                setBusinessNaturesFromApi(res.data);
+            } catch (err) {
+                console.error("Error fetching business natures", err);
+            }
+        };
+        fetchBusinessNatures();
+    }, []);
+
+    const handleBusinessNatureToggle = (id) => {
+        setSelectedBusinessIds((prev) =>
+            prev.includes(id) ? prev.filter((n) => n !== id) : [...prev, id]
         );
         if (errors.businessNature) {
             setErrors((prev) => ({ ...prev, businessNature: null }));
@@ -208,17 +187,12 @@ export default function App() {
         const newErrors = {};
         const passwordCheck = validatePassword(password);
 
-        // --- Client Side Validation ---
-        if (!name.trim())
-            newErrors.name = isRealtor ? "Agency Name is required." : "Full Name is required.";
+        if (!name.trim()) newErrors.name = isRealtor ? "Agency Name is required." : "Full Name is required.";
         if (!email.trim()) newErrors.email = "Email is required.";
         if (!phone.trim()) newErrors.phone = "Phone number is required.";
-        if (password !== confirmPassword)
-            newErrors.confirmPassword = "Passwords do not match.";
-        if (!passwordCheck.isValid)
-            newErrors.password = "Password is not strong enough.";
-        if (isRealtor && selectedBusinessNatures.length === 0)
-            newErrors.businessNature = "Please select at least one business nature.";
+        if (password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match.";
+        if (!passwordCheck.isValid) newErrors.password = "Password must be at least 6 characters.";
+        if (isRealtor && selectedBusinessIds.length === 0) newErrors.businessNature = "Please select at least one nature.";
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -228,39 +202,36 @@ export default function App() {
         setIsLoading(true);
 
         try {
-            // --- Prepare Data ---
+            // --- Payload Construction ---
             const userData = {
                 name,
                 email,
                 phone,
                 password,
-                role: role.toLowerCase(),
-                businessNature: isRealtor ? selectedBusinessNatures : [],
+                userCategory: role, // "BUYER" or "REALTOR"
             };
 
-            // --- API POST Request ---
-            const response = await axios.post(`${BaseURL3}/user/add`, userData);
+            // Only send businessNatureIds if the user is a REALTOR
+            if (isRealtor) {
+                userData.businessNatureIds = selectedBusinessIds;
+            }
+
+            const response = await axios.post(`${BaseURL2}/user/add`, userData);
 
             if (response.status === 200 || response.status === 201) {
                 setSubmissionStatus("success");
                 setServerMessage("Registration successful! Redirecting...");
                 
                 // Reset Form
-                setName("");
-                setEmail("");
-                setPhone("");
-                setPassword("");
-                setConfirmPassword("");
-                setSelectedBusinessNatures([]);
+                setName(""); setEmail(""); setPhone("");
+                setPassword(""); setConfirmPassword("");
+                setSelectedBusinessIds([]);
 
-                setTimeout(() => navigate("/userLogin"), 2000);
+                setTimeout(() => navigate("/UserLogin"), 2000);
             }
         } catch (error) {
-            console.error("API Error:", error);
             setSubmissionStatus("error");
-            setServerMessage(
-                error.response?.data?.message || "An error occurred during registration."
-            );
+            setServerMessage(error.response?.data?.message || "Registration failed. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -268,7 +239,7 @@ export default function App() {
 
     return (
         <div className="min-h-screen flex flex-col md:flex-row bg-gray-50 font-sans">
-            {/* LEFT IMAGE SIDE */}
+            {/* LEFT IMAGE SIDE - Keep your original design */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -300,7 +271,7 @@ export default function App() {
                 </div>
             </motion.div>
 
-            {/* RIGHT FORM SIDE */}
+            {/* RIGHT FORM SIDE - Keep your original design */}
             <motion.div
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -326,28 +297,20 @@ export default function App() {
                     <div className="flex w-full rounded-full bg-gray-200 p-1 mb-6 shadow-inner transition-all duration-300">
                         <button
                             type="button"
-                            onClick={() => {
-                                setRole("Buyer");
-                                setSelectedBusinessNatures([]);
-                                setErrors({});
-                            }}
-                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "Buyer"
-                                    ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
-                                    : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
+                            onClick={() => { setRole("BUYER"); setSelectedBusinessIds([]); setErrors({}); }}
+                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "BUYER"
+                                ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
+                                : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
                                 }`}
                         >
                             <FaUser className="inline-block mr-2" /> Buyer
                         </button>
                         <button
                             type="button"
-                            onClick={() => {
-                                setRole("Realtor");
-                                setSelectedBusinessNatures([]);
-                                setErrors({});
-                            }}
-                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "Realtor"
-                                    ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
-                                    : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
+                            onClick={() => { setRole("REALTOR"); setSelectedBusinessIds([]); setErrors({}); }}
+                            className={`flex-1 py-2 text-sm font-bold rounded-full transition-all duration-300 ${role === "REALTOR"
+                                ? "bg-white text-blue-700 shadow-xl ring-4 ring-blue-500/50"
+                                : "text-gray-600 hover:text-blue-500 hover:bg-gray-100"
                                 }`}
                         >
                             <FaBuilding className="inline-block mr-2" /> Realtor/Agent
@@ -373,17 +336,17 @@ export default function App() {
                                     your primary business nature(s):
                                 </label>
                                 <div className="flex flex-wrap gap-2">
-                                    {["Builder", "Channel Partner", "Dealer"].map((nature) => (
+                                    {businessNaturesFromApi.map((nature) => (
                                         <button
-                                            key={nature}
+                                            key={nature.id}
                                             type="button"
-                                            onClick={() => handleBusinessNatureToggle(nature)}
-                                            className={`py-2 px-4 text-sm font-medium rounded-full transition duration-150 border ${selectedBusinessNatures.includes(nature)
-                                                    ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                                                    : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
+                                            onClick={() => handleBusinessNatureToggle(nature.id)}
+                                            className={`py-2 px-4 text-sm font-medium rounded-full transition duration-150 border ${selectedBusinessIds.includes(nature.id)
+                                                ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                                                : "bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
                                                 }`}
                                         >
-                                            {nature}
+                                            {nature.name}
                                         </button>
                                     ))}
                                 </div>
